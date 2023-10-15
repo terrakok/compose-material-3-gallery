@@ -7,7 +7,6 @@ import androidx.compose.material.icons.Icons
 import androidx.compose.material.icons.filled.DarkMode
 import androidx.compose.material.icons.filled.FormatPaint
 import androidx.compose.material.icons.filled.LightMode
-import androidx.compose.material.icons.filled.ModeNight
 import androidx.compose.material.icons.filled.Opacity
 import androidx.compose.material.icons.filled.TextSnippet
 import androidx.compose.material.icons.filled.Widgets
