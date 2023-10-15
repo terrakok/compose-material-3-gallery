@@ -1,8 +1,6 @@
 # Compose Multiplatform Material 3 Gallery
 
-<video controls>
-  <source src="https://github.com/terrakok/coompose-material-3-gallery/raw/master/media/ios_screen.mp4" type="video/mp4">
-</video>
+![](https://github.com/terrakok/coompose-material-3-gallery/raw/master/media/ios_screen.mp4)
 
 ## Before running!
  - check your system with [KDoctor](https://github.com/Kotlin/kdoctor)
