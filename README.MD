@@ -1,6 +1,6 @@
 # Compose Multiplatform Material 3 Gallery
 
-![](https://github.com/terrakok/coompose-material-3-gallery/raw/master/media/ios_screen.mp4)
+![](https://github.com/terrakok/compose-material-3-gallery/raw/master/media/ios_screen.gif)
 
 ## Before running!
  - check your system with [KDoctor](https://github.com/Kotlin/kdoctor)
