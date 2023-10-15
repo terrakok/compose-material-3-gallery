@@ -1,5 +1,7 @@
 # Compose Multiplatform Application
 
+![ios_screen.mp4](https://github.com/terrakok/coompose-material-3-gallery/blob/master/media/ios_screen.mp4)
+
 ## Before running!
  - check your system with [KDoctor](https://github.com/Kotlin/kdoctor)
  - install JDK 17 on your machine
