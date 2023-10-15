@@ -1,41 +1,36 @@
 package com.github.terrakok
 
 import androidx.compose.foundation.layout.Column
-import androidx.compose.foundation.layout.Spacer
-import androidx.compose.foundation.layout.size
-import androidx.compose.foundation.lazy.LazyColumn
-import androidx.compose.foundation.lazy.items
+import androidx.compose.foundation.layout.padding
+import androidx.compose.foundation.rememberScrollState
+import androidx.compose.foundation.verticalScroll
 import androidx.compose.material3.MaterialTheme
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Modifier
-import androidx.compose.ui.text.TextStyle
 import androidx.compose.ui.unit.dp
 
 @Composable
 fun TypographyScreen() {
-    data class TextItem(val name: String, val style: TextStyle)
-    val items = listOf(
-        TextItem("Display Large", MaterialTheme.typography.displayLarge),
-        TextItem("Display Medium", MaterialTheme.typography.displayMedium),
-        TextItem("Display Small", MaterialTheme.typography.displaySmall),
-        TextItem("Headline Large", MaterialTheme.typography.headlineLarge),
-        TextItem("Headline Medium", MaterialTheme.typography.headlineMedium),
-        TextItem("Headline Small", MaterialTheme.typography.headlineSmall),
-        TextItem("Title Large", MaterialTheme.typography.titleLarge),
-        TextItem("Title Medium", MaterialTheme.typography.titleMedium),
-        TextItem("Title Small", MaterialTheme.typography.titleSmall),
-        TextItem("Label Large", MaterialTheme.typography.labelLarge),
-        TextItem("Label Medium", MaterialTheme.typography.labelMedium),
-        TextItem("Label Small", MaterialTheme.typography.labelSmall),
-        TextItem("Body Large", MaterialTheme.typography.bodyLarge),
-        TextItem("Body Medium", MaterialTheme.typography.bodyMedium),
-        TextItem("Body Small", MaterialTheme.typography.bodySmall),
-    )
-    LazyColumn {
-        items(items) {
-            Text(text = it.name, style = it.style)
-            Spacer(modifier = Modifier.size(16.dp))
-        }
+    Column(
+        modifier = Modifier
+            .verticalScroll(rememberScrollState())
+            .padding(horizontal = 8.dp)
+    ) {
+        Text(modifier = Modifier.padding(8.dp), text = "Display Large", style = MaterialTheme.typography.displayLarge)
+        Text(modifier = Modifier.padding(8.dp), text = "Display Medium", style = MaterialTheme.typography.displayMedium)
+        Text(modifier = Modifier.padding(8.dp), text = "Display Small", style = MaterialTheme.typography.displaySmall)
+        Text(modifier = Modifier.padding(8.dp), text = "Headline Large", style = MaterialTheme.typography.headlineLarge)
+        Text(modifier = Modifier.padding(8.dp), text = "Headline Medium", style = MaterialTheme.typography.headlineMedium)
+        Text(modifier = Modifier.padding(8.dp), text = "Headline Small", style = MaterialTheme.typography.headlineSmall)
+        Text(modifier = Modifier.padding(8.dp), text = "Title Large", style = MaterialTheme.typography.titleLarge)
+        Text(modifier = Modifier.padding(8.dp), text = "Title Medium", style = MaterialTheme.typography.titleMedium)
+        Text(modifier = Modifier.padding(8.dp), text = "Title Small", style = MaterialTheme.typography.titleSmall)
+        Text(modifier = Modifier.padding(8.dp), text = "Label Large", style = MaterialTheme.typography.labelLarge)
+        Text(modifier = Modifier.padding(8.dp), text = "Label Medium", style = MaterialTheme.typography.labelMedium)
+        Text(modifier = Modifier.padding(8.dp), text = "Label Small", style = MaterialTheme.typography.labelSmall)
+        Text(modifier = Modifier.padding(8.dp), text = "Body Large", style = MaterialTheme.typography.bodyLarge)
+        Text(modifier = Modifier.padding(8.dp), text = "Body Medium", style = MaterialTheme.typography.bodyMedium)
+        Text(modifier = Modifier.padding(8.dp), text = "Body Small", style = MaterialTheme.typography.bodySmall)
     }
 }

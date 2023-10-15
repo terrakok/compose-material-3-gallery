@@ -1,20 +1,14 @@
 package com.github.terrakok
 
-import androidx.compose.foundation.gestures.Orientation
-import androidx.compose.foundation.gestures.scrollable
 import androidx.compose.foundation.layout.Column
-import androidx.compose.foundation.layout.PaddingValues
 import androidx.compose.foundation.layout.Spacer
 import androidx.compose.foundation.layout.aspectRatio
 import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.padding
-import androidx.compose.foundation.lazy.LazyColumn
-import androidx.compose.foundation.lazy.grid.GridCells
-import androidx.compose.foundation.lazy.grid.LazyVerticalGrid
-import androidx.compose.foundation.lazy.grid.items
 import androidx.compose.foundation.rememberScrollState
 import androidx.compose.foundation.shape.RoundedCornerShape
+import androidx.compose.foundation.verticalScroll
 import androidx.compose.material3.Card
 import androidx.compose.material3.CardDefaults
 import androidx.compose.material3.MaterialTheme
@@ -53,50 +47,45 @@ fun ElevationScreen() {
         ElevationItem(5, 12, 0.14f),
     )
     var columns by remember { mutableStateOf(6) }
-    LazyColumn(
+    Column(
         modifier = Modifier
             .fillMaxSize()
+            .verticalScroll(rememberScrollState())
             .padding(horizontal = 8.dp)
             .onGloballyPositioned {
                 columns = if (it.size.width < narrowScreenWidthThreshold) 3 else 6
             }
     ) {
-        item {
-            Text(
-                modifier = Modifier.padding(8.dp),
-                text = "Surface Tint Color Only",
-                style = MaterialTheme.typography.titleLarge
-            )
-            NonlazyGrid(
-                modifier = Modifier.padding(bottom = 16.dp),
-                columns = columns,
-                items = items.map { it.copy(withShadow = false) }
-            ) { ElevationCard(it) }
-        }
-        item {
-            Text(
-                modifier = Modifier.padding(8.dp),
-                text = "Surface Tint Color and Shadow Color",
-                style = MaterialTheme.typography.titleLarge
-            )
-            NonlazyGrid(
-                modifier = Modifier.padding(bottom = 16.dp),
-                columns = columns,
-                items = items
-            ) { ElevationCard(it) }
-        }
-        item {
-            Text(
-                modifier = Modifier.padding(8.dp),
-                text = "Shadow Color Only",
-                style = MaterialTheme.typography.titleLarge
-            )
-            NonlazyGrid(
-                modifier = Modifier.padding(bottom = 16.dp),
-                columns = columns,
-                items = items.map { it.copy(withSurface = false) }
-            ) { ElevationCard(it) }
-        }
+        Text(
+            modifier = Modifier.padding(8.dp),
+            text = "Surface Tint Color Only",
+            style = MaterialTheme.typography.titleLarge
+        )
+        NonlazyGrid(
+            modifier = Modifier.padding(bottom = 16.dp),
+            columns = columns,
+            items = items.map { it.copy(withShadow = false) }
+        ) { ElevationCard(it) }
+        Text(
+            modifier = Modifier.padding(8.dp),
+            text = "Surface Tint Color and Shadow Color",
+            style = MaterialTheme.typography.titleLarge
+        )
+        NonlazyGrid(
+            modifier = Modifier.padding(bottom = 16.dp),
+            columns = columns,
+            items = items
+        ) { ElevationCard(it) }
+        Text(
+            modifier = Modifier.padding(8.dp),
+            text = "Shadow Color Only",
+            style = MaterialTheme.typography.titleLarge
+        )
+        NonlazyGrid(
+            modifier = Modifier.padding(bottom = 16.dp),
+            columns = columns,
+            items = items.map { it.copy(withSurface = false) }
+        ) { ElevationCard(it) }
     }
 }
 
