@@ -1,113 +1,112 @@
 package com.github.terrakok
 
-import androidx.compose.foundation.layout.Arrangement
+import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.Row
-import androidx.compose.foundation.layout.Spacer
 import androidx.compose.foundation.layout.WindowInsets
 import androidx.compose.foundation.layout.fillMaxSize
-import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.padding
-import androidx.compose.foundation.layout.safeContent
 import androidx.compose.foundation.layout.safeDrawing
-import androidx.compose.foundation.layout.size
 import androidx.compose.foundation.layout.windowInsetsPadding
-import androidx.compose.foundation.text.KeyboardOptions
 import androidx.compose.material.icons.Icons
-import androidx.compose.material.icons.filled.Close
-import androidx.compose.material.icons.filled.Edit
-import androidx.compose.material3.Button
+import androidx.compose.material.icons.filled.FormatPaint
+import androidx.compose.material.icons.filled.Home
+import androidx.compose.material.icons.filled.Opacity
+import androidx.compose.material.icons.filled.Search
+import androidx.compose.material.icons.filled.Settings
+import androidx.compose.material.icons.filled.TextSnippet
+import androidx.compose.material.icons.filled.Widgets
 import androidx.compose.material3.ExperimentalMaterial3Api
 import androidx.compose.material3.Icon
-import androidx.compose.material3.IconButton
-import androidx.compose.material3.MaterialTheme
-import androidx.compose.material3.OutlinedTextField
+import androidx.compose.material3.NavigationBar
+import androidx.compose.material3.NavigationBarItem
+import androidx.compose.material3.NavigationRail
+import androidx.compose.material3.NavigationRailDefaults
+import androidx.compose.material3.NavigationRailItem
+import androidx.compose.material3.Scaffold
 import androidx.compose.material3.Text
-import androidx.compose.material3.TextButton
+import androidx.compose.material3.TopAppBar
 import androidx.compose.runtime.Composable
+import androidx.compose.runtime.CompositionLocalProvider
+import androidx.compose.runtime.compositionLocalOf
 import androidx.compose.runtime.getValue
+import androidx.compose.runtime.mutableIntStateOf
 import androidx.compose.runtime.mutableStateOf
 import androidx.compose.runtime.remember
 import androidx.compose.runtime.setValue
 import androidx.compose.ui.Modifier
-import androidx.compose.ui.text.input.KeyboardType
-import androidx.compose.ui.text.input.PasswordVisualTransformation
-import androidx.compose.ui.text.input.VisualTransformation
+import androidx.compose.ui.graphics.vector.ImageVector
+import androidx.compose.ui.layout.onGloballyPositioned
 import androidx.compose.ui.unit.dp
 import com.github.terrakok.theme.AppTheme
-import com.github.terrakok.theme.LocalThemeIsDark
 
+const val narrowScreenWidthThreshold = 960
+
+@OptIn(ExperimentalMaterial3Api::class)
 @Composable
 internal fun App() = AppTheme {
-    var email by remember { mutableStateOf("") }
-    var password by remember { mutableStateOf("") }
-    var passwordVisibility by remember { mutableStateOf(false) }
-
-    Column(modifier = Modifier.fillMaxSize().windowInsetsPadding(WindowInsets.safeDrawing)) {
-
-        Row(
-            horizontalArrangement = Arrangement.Center
-        ) {
-            Text(
-                text = "Login",
-                style = MaterialTheme.typography.titleMedium,
-                modifier = Modifier.padding(16.dp)
-            )
-
-            Spacer(modifier = Modifier.weight(1.0f))
-
-            var isDark by LocalThemeIsDark.current
-            IconButton(
-                onClick = { isDark = !isDark }
-            ) {
-                Icon(
-                    modifier = Modifier.padding(8.dp).size(20.dp),
-                    imageVector = if (isDark) rememberLightMode() else rememberDarkMode(),
-                    contentDescription = null
-                )
+    var screenWidth by remember { mutableStateOf(0) }
+    Box(
+        modifier = Modifier
+            .fillMaxSize()
+            .windowInsetsPadding(WindowInsets.safeDrawing)
+            .onGloballyPositioned {
+                screenWidth = it.size.width
             }
-        }
-
-        OutlinedTextField(
-            value = email,
-            onValueChange = { email = it },
-            label = { Text("Email") },
-            singleLine = true,
-            modifier = Modifier.fillMaxWidth().padding(16.dp)
+    ) {
+        data class Screen(
+            val title: String,
+            val icon: ImageVector,
+            val content: @Composable () -> Unit
         )
 
-        OutlinedTextField(
-            value = password,
-            onValueChange = { password = it },
-            label = { Text("Password") },
-            singleLine = true,
-            visualTransformation = if (passwordVisibility) VisualTransformation.None else PasswordVisualTransformation(),
-            modifier = Modifier.fillMaxWidth().padding(16.dp),
-            keyboardOptions = KeyboardOptions(
-                keyboardType = KeyboardType.Password
-            ),
-            trailingIcon = {
-                IconButton(onClick = { passwordVisibility = !passwordVisibility }) {
-                    val imageVector = if (passwordVisibility) Icons.Default.Close else Icons.Default.Edit
-                    Icon(imageVector, contentDescription = if (passwordVisibility) "Hide password" else "Show password")
+        val screens = listOf(
+            Screen("Components", Icons.Filled.Widgets) { ComponentScreen() },
+            Screen("Color", Icons.Filled.FormatPaint) { ColorScreen() },
+            Screen("Typography", Icons.Filled.TextSnippet) { TypographyScreen() },
+            Screen("Elevation", Icons.Filled.Opacity) { ElevationScreen() },
+        )
+        var selectedScreen by remember { mutableStateOf(screens[0]) }
+
+        Scaffold(
+            topBar = {
+                TopAppBar(
+                    title = { Text(text = "Material 3") }
+                )
+            },
+            content = {
+                Row(
+                    modifier = Modifier.padding(it)
+                ) {
+                    if (screenWidth > narrowScreenWidthThreshold) {
+                        NavigationRail {
+                            screens.forEach { screen ->
+                                NavigationRailItem(
+                                    icon = { Icon(screen.icon, contentDescription = screen.title) },
+                                    label = { Text(screen.title) },
+                                    selected = selectedScreen == screen,
+                                    onClick = { selectedScreen = screen }
+                                )
+                            }
+                        }
+                    }
+                    selectedScreen.content()
+                }
+            },
+            bottomBar = {
+                if (screenWidth <= narrowScreenWidthThreshold) {
+                    NavigationBar {
+                        screens.forEach { screen ->
+                            NavigationBarItem(
+                                icon = { Icon(screen.icon, contentDescription = screen.title) },
+                                label = { Text(screen.title) },
+                                selected = selectedScreen == screen,
+                                onClick = { selectedScreen = screen }
+                            )
+                        }
+                    }
                 }
             }
         )
-
-        Button(
-            onClick = { /* Handle login logic here */ },
-            modifier = Modifier.fillMaxWidth().padding(16.dp)
-        ) {
-            Text("Login")
-        }
-
-        TextButton(
-            onClick = { openUrl("https://github.com/terrakok") },
-            modifier = Modifier.fillMaxWidth().padding(16.dp)
-        ) {
-            Text("Open github")
-        }
     }
 }
-
-internal expect fun openUrl(url: String?)
