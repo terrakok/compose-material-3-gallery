@@ -1,6 +1,8 @@
 # Compose Multiplatform Application
 
-![ios_screen.mp4](https://github.com/terrakok/coompose-material-3-gallery/blob/master/media/ios_screen.mp4)
+<video width="300" height="600" controls>
+  <source src="https://github.com/terrakok/coompose-material-3-gallery/blob/master/media/ios_screen.mp4" type="video/mp4">
+</video>
 
 ## Before running!
  - check your system with [KDoctor](https://github.com/Kotlin/kdoctor)
