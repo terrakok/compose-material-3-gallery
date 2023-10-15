@@ -1,6 +1,8 @@
 package com.github.terrakok
 
 import androidx.compose.foundation.background
+import androidx.compose.foundation.clickable
+import androidx.compose.foundation.interaction.MutableInteractionSource
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.Row
@@ -16,7 +18,9 @@ import androidx.compose.foundation.shape.RoundedCornerShape
 import androidx.compose.foundation.verticalScroll
 import androidx.compose.material.icons.Icons
 import androidx.compose.material.icons.filled.Add
+import androidx.compose.material.icons.filled.Info
 import androidx.compose.material.icons.filled.Settings
+import androidx.compose.material.icons.outlined.Info
 import androidx.compose.material3.Button
 import androidx.compose.material3.ButtonDefaults
 import androidx.compose.material3.ElevatedButton
@@ -41,7 +45,6 @@ import androidx.compose.ui.unit.dp
 fun Actions() {
     Column(
         modifier = Modifier
-            .verticalScroll(rememberScrollState())
             .background(MaterialTheme.colorScheme.surfaceVariant, RoundedCornerShape(16.dp))
             .fillMaxWidth()
             .padding(horizontal = 8.dp, vertical = 16.dp),
@@ -51,23 +54,48 @@ fun Actions() {
             text = "Actions",
             style = MaterialTheme.typography.titleLarge
         )
-        Text(
+        Row(
             modifier = Modifier.padding(top = 16.dp, bottom = 8.dp),
-            text = "Common buttons"
-        )
+            verticalAlignment = Alignment.CenterVertically
+        ) {
+            Text("Common buttons")
+            IconButton(
+                modifier = Modifier.padding(4.dp).size(16.dp),
+                onClick = { openUrl("https://developer.android.com/jetpack/compose/components/button") }
+            ) {
+                Icon(imageVector = Icons.Outlined.Info, contentDescription = null)
+            }
+        }
         CommonButtons()
-        Text(
+        Row(
             modifier = Modifier.padding(top = 16.dp, bottom = 8.dp),
-            text = "Floating action buttons"
-        )
+            verticalAlignment = Alignment.CenterVertically
+        ) {
+            Text("Floating action buttons")
+            IconButton(
+                modifier = Modifier.padding(4.dp).size(16.dp),
+                onClick = { openUrl("https://developer.android.com/jetpack/compose/components/fab") }
+            ) {
+                Icon(imageVector = Icons.Outlined.Info, contentDescription = null)
+            }
+        }
         FloatingActionButtons()
-        Text(
+        Row(
             modifier = Modifier.padding(top = 16.dp, bottom = 8.dp),
-            text = "Icon buttons"
-        )
+            verticalAlignment = Alignment.CenterVertically
+        ) {
+            Text("Icon buttons")
+            IconButton(
+                modifier = Modifier.padding(4.dp).size(16.dp),
+                onClick = { openUrl("https://developer.android.com/reference/kotlin/androidx/compose/material3/package-summary#IconButton(kotlin.Function0,androidx.compose.ui.Modifier,kotlin.Boolean,androidx.compose.material3.IconButtonColors,androidx.compose.foundation.interaction.MutableInteractionSource,kotlin.Function0)") }
+            ) {
+                Icon(imageVector = Icons.Outlined.Info, contentDescription = null)
+            }
+        }
         IconButtons()
     }
 }
+
 @Composable
 fun CommonButtons() {
     OutlinedCard {

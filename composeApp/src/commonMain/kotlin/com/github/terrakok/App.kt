@@ -1,15 +1,20 @@
 package com.github.terrakok
 
 import androidx.compose.foundation.layout.Row
+import androidx.compose.foundation.layout.RowScope
 import androidx.compose.foundation.layout.padding
 import androidx.compose.material.icons.Icons
+import androidx.compose.material.icons.filled.DarkMode
 import androidx.compose.material.icons.filled.FormatPaint
+import androidx.compose.material.icons.filled.LightMode
+import androidx.compose.material.icons.filled.ModeNight
 import androidx.compose.material.icons.filled.Opacity
 import androidx.compose.material.icons.filled.TextSnippet
 import androidx.compose.material.icons.filled.Widgets
 import androidx.compose.material3.CenterAlignedTopAppBar
 import androidx.compose.material3.ExperimentalMaterial3Api
 import androidx.compose.material3.Icon
+import androidx.compose.material3.IconButton
 import androidx.compose.material3.NavigationBar
 import androidx.compose.material3.NavigationBarItem
 import androidx.compose.material3.NavigationRail
@@ -28,6 +33,7 @@ import androidx.compose.ui.graphics.vector.ImageVector
 import androidx.compose.ui.input.nestedscroll.nestedScroll
 import androidx.compose.ui.layout.onGloballyPositioned
 import com.github.terrakok.theme.AppTheme
+import com.github.terrakok.theme.LocalThemeIsDark
 
 const val narrowScreenWidthThreshold = 1300
 
@@ -58,15 +64,30 @@ internal fun App() = AppTheme {
                 screenWidth = it.size.width
             },
         topBar = {
+            @Composable
+            fun RowScope.actions() {
+                var isDark by LocalThemeIsDark.current
+                IconButton(
+                    onClick = { isDark = !isDark }
+                ) {
+                    Icon(
+                        if (isDark) Icons.Default.LightMode else Icons.Default.DarkMode,
+                        contentDescription = null
+                    )
+                }
+            }
+
             if (screenWidth <= narrowScreenWidthThreshold) {
                 TopAppBar(
                     title = { Text(text = "Material 3") },
-                    scrollBehavior = scrollBehavior
+                    scrollBehavior = scrollBehavior,
+                    actions = { actions() }
                 )
             } else {
                 CenterAlignedTopAppBar(
                     title = { Text(text = "Material 3") },
-                    scrollBehavior = scrollBehavior
+                    scrollBehavior = scrollBehavior,
+                    actions = { actions() }
                 )
             }
         },
@@ -111,3 +132,5 @@ internal fun App() = AppTheme {
         }
     )
 }
+
+internal expect fun openUrl(url: String?)
