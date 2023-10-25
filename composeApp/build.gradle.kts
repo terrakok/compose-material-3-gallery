@@ -6,9 +6,8 @@ plugins {
     alias(libs.plugins.android.application)
 }
 
-@OptIn(org.jetbrains.kotlin.gradle.ExperimentalKotlinGradlePluginApi::class)
 kotlin {
-    targetHierarchy.default()
+    applyDefaultHierarchyTemplate()
     androidTarget {
         compilations.all {
             kotlinOptions {
@@ -17,7 +16,7 @@ kotlin {
         }
     }
 
-    jvm("desktop")
+    jvm()
 
     js {
         browser()
@@ -41,7 +40,7 @@ kotlin {
                 optIn("org.jetbrains.compose.resources.ExperimentalResourceApi")
             }
         }
-        val commonMain by getting {
+        commonMain {
             dependencies {
                 implementation(compose.runtime)
                 implementation(compose.material3)
@@ -51,13 +50,13 @@ kotlin {
             }
         }
 
-        val commonTest by getting {
+        commonTest {
             dependencies {
                 implementation(kotlin("test"))
             }
         }
 
-        val androidMain by getting {
+        androidMain {
             dependencies {
                 implementation(libs.androidx.appcompat)
                 implementation(libs.androidx.activityCompose)
@@ -65,20 +64,20 @@ kotlin {
             }
         }
 
-        val desktopMain by getting {
+        jvmMain {
             dependencies {
                 implementation(compose.desktop.common)
                 implementation(compose.desktop.currentOs)
             }
         }
 
-        val jsMain by getting {
+        jsMain {
             dependencies {
                 implementation(compose.html.core)
             }
         }
 
-        val iosMain by getting {
+        iosMain {
             dependencies {
             }
         }
