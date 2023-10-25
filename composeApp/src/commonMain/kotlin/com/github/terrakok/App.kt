@@ -19,6 +19,8 @@ import androidx.compose.material3.NavigationBarItem
 import androidx.compose.material3.NavigationRail
 import androidx.compose.material3.NavigationRailItem
 import androidx.compose.material3.Scaffold
+import androidx.compose.material3.SnackbarHost
+import androidx.compose.material3.SnackbarHostState
 import androidx.compose.material3.Text
 import androidx.compose.material3.TopAppBar
 import androidx.compose.material3.TopAppBarDefaults
@@ -47,8 +49,10 @@ internal fun App() = AppTheme {
         val content: @Composable () -> Unit
     )
 
+    val snackbarHostState = remember { SnackbarHostState() }
+
     val screens = listOf(
-        Screen("Components", Icons.Filled.Widgets) { ComponentScreen() },
+        Screen("Components", Icons.Filled.Widgets) { ComponentScreen(snackbarHostState) },
         Screen("Color", Icons.Filled.FormatPaint) { ColorScreen() },
         Screen("Typography", Icons.Filled.TextSnippet) { TypographyScreen() },
         Screen("Elevation", Icons.Filled.Opacity) { ElevationScreen() },
@@ -62,6 +66,9 @@ internal fun App() = AppTheme {
             .onGloballyPositioned {
                 screenWidth = it.size.width
             },
+        snackbarHost = {
+            SnackbarHost(hostState = snackbarHostState)
+        },
         topBar = {
             @Composable
             fun RowScope.actions() {

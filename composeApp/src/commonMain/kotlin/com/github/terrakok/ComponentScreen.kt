@@ -6,12 +6,15 @@ import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.size
 import androidx.compose.foundation.rememberScrollState
 import androidx.compose.foundation.verticalScroll
+import androidx.compose.material3.SnackbarHostState
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.unit.dp
 
 @Composable
-fun ComponentScreen() {
+fun ComponentScreen(
+    snackbarHostState: SnackbarHostState
+) {
     Column(
         modifier = Modifier
             .verticalScroll(rememberScrollState())
@@ -20,5 +23,7 @@ fun ComponentScreen() {
         Actions()
         Spacer(Modifier.size(16.dp))
         TextInputs()
+        Spacer(Modifier.size(16.dp))
+        Communication(snackbarHostState)
     }
 }
