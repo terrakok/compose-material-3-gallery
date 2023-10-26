@@ -25,6 +25,8 @@ import androidx.compose.material3.Text
 import androidx.compose.material3.TopAppBar
 import androidx.compose.material3.TopAppBarDefaults
 import androidx.compose.runtime.Composable
+import androidx.compose.runtime.CompositionLocalProvider
+import androidx.compose.runtime.compositionLocalOf
 import androidx.compose.runtime.getValue
 import androidx.compose.runtime.mutableStateOf
 import androidx.compose.runtime.remember
@@ -38,25 +40,27 @@ import com.github.terrakok.theme.LocalThemeIsDark
 
 const val narrowScreenWidthThreshold = 1300
 
+val LocalSnackbarHostState = compositionLocalOf<SnackbarHostState> { error("SnackbarHostState is not found") }
+
+data class Screen(
+    val title: String,
+    val icon: ImageVector,
+    val content: @Composable () -> Unit
+)
+
+val screens = listOf(
+    Screen("Components", Icons.Filled.Widgets) { ComponentScreen() },
+    Screen("Color", Icons.Filled.FormatPaint) { ColorScreen() },
+    Screen("Typography", Icons.Filled.TextSnippet) { TypographyScreen() },
+    Screen("Elevation", Icons.Filled.Opacity) { ElevationScreen() },
+)
+
 @OptIn(ExperimentalMaterial3Api::class)
 @Composable
 internal fun App() = AppTheme {
     var screenWidth by remember { mutableStateOf(0) }
 
-    data class Screen(
-        val title: String,
-        val icon: ImageVector,
-        val content: @Composable () -> Unit
-    )
-
     val snackbarHostState = remember { SnackbarHostState() }
-
-    val screens = listOf(
-        Screen("Components", Icons.Filled.Widgets) { ComponentScreen(snackbarHostState) },
-        Screen("Color", Icons.Filled.FormatPaint) { ColorScreen() },
-        Screen("Typography", Icons.Filled.TextSnippet) { TypographyScreen() },
-        Screen("Elevation", Icons.Filled.Opacity) { ElevationScreen() },
-    )
     var selectedScreen by remember { mutableStateOf(screens[0]) }
     val scrollBehavior = TopAppBarDefaults.pinnedScrollBehavior()
 
@@ -116,7 +120,11 @@ internal fun App() = AppTheme {
                         }
                     }
                 }
-                selectedScreen.content()
+                CompositionLocalProvider(
+                    LocalSnackbarHostState provides snackbarHostState
+                ) {
+                    selectedScreen.content()
+                }
             }
         },
         bottomBar = {

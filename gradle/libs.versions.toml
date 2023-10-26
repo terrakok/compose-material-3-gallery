@@ -1,6 +1,6 @@
 [versions]
 
-kotlin = "1.9.20-RC"
+kotlin = "1.9.20-RC2"
 agp = "8.2.0-rc01"
 compose = "1.5.10-rc02"
 androidx-appcompat = "1.6.1"

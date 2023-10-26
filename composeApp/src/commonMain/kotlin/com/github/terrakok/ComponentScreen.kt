@@ -12,9 +12,7 @@ import androidx.compose.ui.Modifier
 import androidx.compose.ui.unit.dp
 
 @Composable
-fun ComponentScreen(
-    snackbarHostState: SnackbarHostState
-) {
+fun ComponentScreen() {
     Column(
         modifier = Modifier
             .verticalScroll(rememberScrollState())
@@ -24,6 +22,6 @@ fun ComponentScreen(
         Spacer(Modifier.size(16.dp))
         TextInputs()
         Spacer(Modifier.size(16.dp))
-        Communication(snackbarHostState)
+        Communication()
     }
 }

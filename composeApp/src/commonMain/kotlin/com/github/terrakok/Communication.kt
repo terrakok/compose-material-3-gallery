@@ -54,9 +54,7 @@ import androidx.compose.ui.unit.dp
 import kotlinx.coroutines.launch
 
 @Composable
-fun Communication(
-    snackbarHostState: SnackbarHostState
-) {
+fun Communication() {
     Column(
         modifier = Modifier
             .background(MaterialTheme.colorScheme.surfaceVariant, RoundedCornerShape(16.dp))
@@ -107,7 +105,7 @@ fun Communication(
                 Icon(imageVector = Icons.Outlined.Info, contentDescription = null)
             }
         }
-        SnackbarButton(snackbarHostState)
+        SnackbarButton()
     }
 }
 
@@ -226,9 +224,7 @@ fun ProgressIndicators() {
 }
 
 @Composable
-fun SnackbarButton(
-    snackbarHostState: SnackbarHostState
-) {
+fun SnackbarButton() {
     OutlinedCard {
         Box(
             modifier = Modifier
@@ -238,6 +234,7 @@ fun SnackbarButton(
             contentAlignment = Alignment.Center
         ) {
             val coroutineScope = rememberCoroutineScope()
+            val snackbarHostState = LocalSnackbarHostState.current
             TextButton(
                 onClick = {
                     coroutineScope.launch {
