@@ -5,6 +5,8 @@ import androidx.compose.foundation.layout.RowScope
 import androidx.compose.foundation.layout.padding
 import androidx.compose.material.icons.Icons
 import androidx.compose.material.icons.filled.DarkMode
+import androidx.compose.material.icons.filled.Dock
+import androidx.compose.material.icons.filled.DocumentScanner
 import androidx.compose.material.icons.filled.FormatPaint
 import androidx.compose.material.icons.filled.LightMode
 import androidx.compose.material.icons.filled.Opacity
@@ -76,6 +78,14 @@ internal fun App() = AppTheme {
         topBar = {
             @Composable
             fun RowScope.actions() {
+                IconButton(
+                    onClick = { openUrl("https://github.com/terrakok/compose-material-3-gallery") }
+                ) {
+                    Icon(
+                        Icons.Default.DocumentScanner,
+                        contentDescription = null
+                    )
+                }
                 var isDark by LocalThemeIsDark.current
                 IconButton(
                     onClick = { isDark = !isDark }
