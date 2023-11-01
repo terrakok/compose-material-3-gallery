@@ -5,6 +5,7 @@ import androidx.compose.foundation.layout.*
 import androidx.compose.foundation.selection.selectable
 import androidx.compose.foundation.selection.selectableGroup
 import androidx.compose.material.icons.Icons
+import androidx.compose.material.icons.filled.Check
 import androidx.compose.material.icons.filled.Close
 import androidx.compose.material.icons.filled.Done
 import androidx.compose.material.icons.outlined.Event
@@ -32,6 +33,9 @@ private val radioButtonInfoUrl =
 
 private val sliderInfoUrl =
     "https://developer.android.com/jetpack/compose/components/slider"
+
+private val switchInfoUrl =
+    "https://developer.android.com/jetpack/compose/components/switch"
 
 @Composable
 fun Selection() {
@@ -77,6 +81,79 @@ fun Selection() {
         ) {
             SlidersDemo()
         }
+
+        ChildSection(
+            title = "Switches",
+            infoUrl = switchInfoUrl
+        ) {
+            SwtichesDemo()
+        }
+    }
+}
+
+@Composable
+private fun SwtichesDemo() {
+    OutlinedCard {
+        Column(
+            modifier = Modifier
+                .selectableGroup()
+                .requiredWidthIn(400.dp)
+                .width(600.dp)
+                .padding(32.dp),
+        ) {
+            Row(horizontalArrangement = Arrangement.SpaceEvenly, modifier = Modifier.fillMaxWidth()) {
+                var checked by remember { mutableStateOf(true) }
+                Switch(
+                    checked = checked,
+                    onCheckedChange = { checked = it }
+                )
+
+                var checked2 by remember { mutableStateOf(true) }
+                Switch(
+                    checked = checked2,
+                    onCheckedChange = { checked2 = it },
+                    thumbContent = if (checked2) {
+                        {
+                            Icon(
+                                imageVector = Icons.Filled.Check,
+                                contentDescription = null,
+                                modifier = Modifier.size(SwitchDefaults.IconSize),
+                            )
+                        }
+                    } else {
+                        {
+                            Icon(
+                                imageVector = Icons.Filled.Close,
+                                contentDescription = null,
+                                modifier = Modifier.size(SwitchDefaults.IconSize),
+                            )
+                        }
+                    }
+                )
+            }
+
+            Spacer(modifier = Modifier.height(16.dp))
+
+            Row(horizontalArrangement = Arrangement.SpaceEvenly, modifier = Modifier.fillMaxWidth()) {
+                Switch(
+                    enabled = false,
+                    checked = false,
+                    onCheckedChange = null
+                )
+                Switch(
+                    enabled = false,
+                    checked = true,
+                    onCheckedChange = null,
+                    thumbContent = {
+                        Icon(
+                            imageVector = Icons.Filled.Check,
+                            contentDescription = null,
+                            modifier = Modifier.size(SwitchDefaults.IconSize),
+                        )
+                    }
+                )
+            }
+        }
     }
 }
 
@@ -116,8 +193,8 @@ private fun SlidersDemo() {
 }
 
 
-
 private val radioOptions = listOf("Option 1", "Option 2", "Option 3")
+
 @Composable
 private fun RadioButtonsDemo() {
     val (selectedOption, onOptionSelected) = remember { mutableStateOf(radioOptions[0]) }
