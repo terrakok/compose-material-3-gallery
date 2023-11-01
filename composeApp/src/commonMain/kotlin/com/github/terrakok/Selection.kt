@@ -41,63 +41,34 @@ private val switchInfoUrl =
 private val timePickerInfoUrl =
     "https://developer.android.com/reference/kotlin/androidx/compose/material3/package-summary#TimePicker(androidx.compose.material3.TimePickerState,androidx.compose.ui.Modifier,androidx.compose.material3.TimePickerColors,androidx.compose.material3.TimePickerLayoutType)"
 
+
+private data class ChildSectionItem(
+    val title: String,
+    val infoUrl: String,
+    val content: @Composable () -> Unit
+)
+
+private val sectionsList = listOf(
+    ChildSectionItem("Checkboxes", checkboxesInfoUrl) { CheckboxesDemo() },
+    ChildSectionItem("Chips", chipsInfoUrl) { ChipsDemo() },
+    ChildSectionItem("Date picker", datePickerInfoUrl) { DatePickerDemo() },
+    ChildSectionItem("Menus", menusInfoUrl) { MenuDemo() },
+    ChildSectionItem("Radio buttons", radioButtonInfoUrl) { RadioButtonsDemo() },
+    ChildSectionItem("Sliders", sliderInfoUrl) { SlidersDemo() },
+    ChildSectionItem("Switches", switchInfoUrl) { SwtichesDemo() },
+    ChildSectionItem("Time picker", timePickerInfoUrl) { TimePickerDemo() },
+)
 @Composable
 fun Selection() {
     ParentSection("Selection") {
-        ChildSection(
-            title = "Checkboxes",
-            infoUrl = checkboxesInfoUrl
-        ) {
-            CheckboxesDemo()
-        }
-
-        ChildSection(
-            title = "Chips",
-            infoUrl = chipsInfoUrl
-        ) {
-            ChipsDemo()
-        }
-
-        ChildSection(
-            title = "Date picker",
-            infoUrl = datePickerInfoUrl
-        ) {
-            DatePickerDemo()
-        }
-
-        ChildSection(
-            title = "Menus",
-            infoUrl = menusInfoUrl
-        ) {
-            MenuDemo()
-        }
-
-        ChildSection(
-            title = "Radio buttons",
-            infoUrl = radioButtonInfoUrl
-        ) {
-            RadioButtonsDemo()
-        }
-
-        ChildSection(
-            title = "Sliders",
-            infoUrl = sliderInfoUrl
-        ) {
-            SlidersDemo()
-        }
-
-        ChildSection(
-            title = "Switches",
-            infoUrl = switchInfoUrl
-        ) {
-            SwtichesDemo()
-        }
-
-        ChildSection(
-            title = "Time picker",
-            infoUrl = timePickerInfoUrl
-        ) {
-            TimePickerDemo()
+        sectionsList.forEach {
+            key(it.title) {
+                ChildSection(
+                    title = it.title,
+                    infoUrl = it.infoUrl,
+                    content = it.content
+                )
+            }
         }
     }
 }
