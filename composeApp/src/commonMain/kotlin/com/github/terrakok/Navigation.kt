@@ -3,6 +3,7 @@ package com.github.terrakok
 import androidx.compose.foundation.BorderStroke
 import androidx.compose.foundation.background
 import androidx.compose.foundation.layout.Box
+import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.Spacer
 import androidx.compose.foundation.layout.height
 import androidx.compose.foundation.layout.padding
@@ -19,10 +20,13 @@ import androidx.compose.material.icons.filled.Edit
 import androidx.compose.material.icons.filled.Explore
 import androidx.compose.material.icons.filled.Favorite
 import androidx.compose.material.icons.filled.FavoriteBorder
+import androidx.compose.material.icons.filled.Image
 import androidx.compose.material.icons.filled.Inbox
+import androidx.compose.material.icons.filled.MusicNote
 import androidx.compose.material.icons.filled.Pets
 import androidx.compose.material.icons.filled.Search
 import androidx.compose.material.icons.filled.Send
+import androidx.compose.material.icons.filled.Videocam
 import androidx.compose.material.icons.outlined.AccountBox
 import androidx.compose.material.icons.outlined.Delete
 import androidx.compose.material.icons.outlined.Explore
@@ -44,7 +48,10 @@ import androidx.compose.material3.NavigationRailItem
 import androidx.compose.material3.OutlinedCard
 import androidx.compose.material3.PermanentDrawerSheet
 import androidx.compose.material3.PermanentNavigationDrawer
+import androidx.compose.material3.ScrollableTabRow
 import androidx.compose.material3.Surface
+import androidx.compose.material3.Tab
+import androidx.compose.material3.TabRow
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.getValue
@@ -81,6 +88,12 @@ fun Navigation() {
             infoUrl = "https://developer.android.com/reference/kotlin/androidx/compose/material3/package-summary#navigationrail"
         ) {
             GalleryNavigationRail()
+        }
+        ChildSection(
+            title = "Tabs",
+            infoUrl = "https://developer.android.com/reference/kotlin/androidx/compose/material3/package-summary#Tab(kotlin.Boolean,kotlin.Function0,androidx.compose.ui.Modifier,kotlin.Boolean,kotlin.Function0,kotlin.Function0,androidx.compose.ui.graphics.Color,androidx.compose.ui.graphics.Color,androidx.compose.foundation.interaction.MutableInteractionSource)"
+        ) {
+            GalleryTabs()
         }
     }
 }
@@ -341,6 +354,72 @@ private fun GalleryNavigationRail() {
                         label = { Text("Trash") }
                     )
                     Spacer(Modifier.size(40.dp))
+                }
+            }
+        }
+    }
+}
+
+@Composable
+private fun GalleryTabs() {
+    OutlinedCard {
+        Column(
+            modifier = Modifier
+                .requiredWidthIn(400.dp)
+                .width(600.dp)
+                .padding(16.dp)
+        ) {
+            var selected by remember { mutableStateOf(0) }
+            TabRow(
+                selectedTabIndex = selected
+            ) {
+                Tab(
+                    selected = selected == 0,
+                    onClick = { selected = 0 },
+                    icon = {
+                        Icon(
+                            imageVector = Icons.Default.Videocam,
+                            contentDescription = null
+                        )
+                    },
+                    text = { Text("Video") }
+                )
+                Tab(
+                    selected = selected == 1,
+                    onClick = { selected = 1 },
+                    icon = {
+                        Icon(
+                            imageVector = Icons.Default.Image,
+                            contentDescription = null
+                        )
+                    },
+                    text = { Text("Photo") }
+                )
+                Tab(
+                    selected = selected == 2,
+                    onClick = { selected = 2 },
+                    icon = {
+                        Icon(
+                            imageVector = Icons.Default.MusicNote,
+                            contentDescription = null
+                        )
+                    },
+                    text = { Text("Audio") }
+                )
+            }
+            Spacer(Modifier.size(16.dp))
+
+            var selected2 by remember { mutableStateOf(0) }
+            val items = List(10) { "Tab #$it" }
+            ScrollableTabRow(
+                selectedTabIndex = selected2
+            ) {
+                items.forEachIndexed { i, item ->
+                    Tab(
+                        selected = selected2 == i,
+                        onClick = { selected2 = i },
+                        text = { Text(item) }
+                    )
                 }
             }
         }
