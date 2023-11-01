@@ -5,6 +5,7 @@ import androidx.compose.foundation.background
 import androidx.compose.foundation.clickable
 import androidx.compose.foundation.layout.*
 import androidx.compose.material.icons.Icons
+import androidx.compose.material.icons.filled.ArrowBack
 import androidx.compose.material.icons.filled.Close
 import androidx.compose.material.icons.filled.MoreVert
 import androidx.compose.material.icons.outlined.*
@@ -155,6 +156,7 @@ private val DefaultDialogProperties = DialogProperties(
     usePlatformInsets = false
 )
 
+@OptIn(ExperimentalMaterial3Api::class)
 @Composable
 private fun FullScreenDialog(onDismissRequest: () -> Unit) {
     Dialog(onDismissRequest = { onDismissRequest() }, properties = DefaultDialogProperties) {
@@ -164,29 +166,27 @@ private fun FullScreenDialog(onDismissRequest: () -> Unit) {
             .clickable { onDismissRequest() }
         ) {
 
-            Row(
-                modifier = Modifier.fillMaxWidth(),
-                verticalAlignment = Alignment.CenterVertically,
-                horizontalArrangement = Arrangement.SpaceBetween,
-            ) {
-
-                Row(
-                    verticalAlignment = Alignment.CenterVertically,
-                ) {
-                    IconButton(onClick = onDismissRequest) {
-                        Icon(imageVector = Icons.Default.Close, contentDescription = null)
+            TopAppBar(
+                colors = TopAppBarDefaults.topAppBarColors(
+                    containerColor = MaterialTheme.colorScheme.background
+                ),
+                navigationIcon = {
+                    IconButton(
+                        onClick = { onDismissRequest() }
+                    ) {
+                        Icon(
+                            imageVector = Icons.Default.Close,
+                            contentDescription = null
+                        )
                     }
-
-                    Text(
-                        text = "Full-screen dialog",
-                        style = MaterialTheme.typography.headlineSmall,
-                    )
+                },
+                title = { Text("Full-screen dialog") },
+                actions = {
+                    TextButton(onClick = { onDismissRequest() }, modifier = Modifier) {
+                        Text("Close")
+                    }
                 }
-
-                TextButton(onClick = { onDismissRequest() }, modifier = Modifier) {
-                    Text("Close")
-                }
-            }
+            )
         }
     }
 }
