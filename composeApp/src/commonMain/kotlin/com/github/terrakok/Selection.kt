@@ -37,6 +37,9 @@ private val sliderInfoUrl =
 private val switchInfoUrl =
     "https://developer.android.com/jetpack/compose/components/switch"
 
+private val timePickerInfoUrl =
+    "https://developer.android.com/reference/kotlin/androidx/compose/material3/package-summary#TimePicker(androidx.compose.material3.TimePickerState,androidx.compose.ui.Modifier,androidx.compose.material3.TimePickerColors,androidx.compose.material3.TimePickerLayoutType)"
+
 @Composable
 fun Selection() {
     ParentSection("Selection") {
@@ -88,6 +91,65 @@ fun Selection() {
         ) {
             SwtichesDemo()
         }
+
+        ChildSection(
+            title = "Time picker",
+            infoUrl = timePickerInfoUrl
+        ) {
+            TimePickerDemo()
+        }
+    }
+}
+
+@OptIn(ExperimentalMaterial3Api::class)
+@Composable
+private fun TimePickerDemo() {
+
+    var openDialog by remember { mutableStateOf(false) }
+
+    OutlinedCard {
+        Row(
+            modifier = Modifier
+                .selectableGroup()
+                .requiredWidthIn(400.dp)
+                .width(600.dp)
+                .padding(32.dp),
+            horizontalArrangement = Arrangement.Center
+        ) {
+            TextButton(
+                onClick = { openDialog = true }
+            ) {
+                Text("Show time picker")
+            }
+        }
+    }
+
+    if (openDialog) {
+        val state = rememberTimePickerState()
+
+        // TODO: Use TimePickerDialog when we update to a newer version of material3
+        DatePickerDialog(
+            onDismissRequest = { openDialog = false },
+            confirmButton = {
+                TextButton(onClick = {
+                    openDialog = false
+                }) {
+                    Text("OK")
+                }
+            },
+            dismissButton = {
+                TextButton(onClick = {
+                    openDialog = false
+                }) {
+                    Text("Cancel")
+                }
+            },
+            content = {
+                Box(modifier = Modifier.padding(32.dp)) {
+                    TimePicker(state)
+                }
+            }
+        )
     }
 }
 
