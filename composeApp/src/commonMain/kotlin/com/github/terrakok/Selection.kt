@@ -30,6 +30,9 @@ private val menusInfoUrl =
 private val radioButtonInfoUrl =
     "https://developer.android.com/reference/kotlin/androidx/compose/material3/package-summary#RadioButton(kotlin.Boolean,kotlin.Function0,androidx.compose.ui.Modifier,kotlin.Boolean,androidx.compose.material3.RadioButtonColors,androidx.compose.foundation.interaction.MutableInteractionSource)"
 
+private val sliderInfoUrl =
+    "https://developer.android.com/jetpack/compose/components/slider"
+
 @Composable
 fun Selection() {
     ParentSection("Selection") {
@@ -58,6 +61,7 @@ fun Selection() {
             title = "Menus (TODO)",
             infoUrl = menusInfoUrl
         ) {
+            // TODO
         }
 
         ChildSection(
@@ -65,6 +69,48 @@ fun Selection() {
             infoUrl = radioButtonInfoUrl
         ) {
             RadioButtonsDemo()
+        }
+
+        ChildSection(
+            title = "Sliders",
+            infoUrl = sliderInfoUrl
+        ) {
+            SlidersDemo()
+        }
+    }
+}
+
+@Composable
+private fun SlidersDemo() {
+    OutlinedCard {
+        Column(
+            modifier = Modifier
+                .selectableGroup()
+                .requiredWidthIn(400.dp)
+                .width(600.dp)
+                .padding(32.dp),
+        ) {
+            var sliderPosition by remember { mutableFloatStateOf(0f) }
+            Slider(
+                value = sliderPosition,
+                onValueChange = { sliderPosition = it }
+            )
+            Spacer(modifier = Modifier.height(32.dp))
+            var sliderPosition2 by remember { mutableFloatStateOf(0f) }
+            Slider(
+                value = sliderPosition2,
+                onValueChange = { sliderPosition2 = it },
+                steps = 5,
+                valueRange = 0f..100f
+            )
+            Spacer(modifier = Modifier.height(32.dp))
+            var sliderPosition3 by remember { mutableStateOf(0f..100f) }
+            RangeSlider(
+                value = sliderPosition3,
+                steps = 5,
+                onValueChange = { range -> sliderPosition3 = range },
+                valueRange = 0f..100f,
+            )
         }
     }
 }
