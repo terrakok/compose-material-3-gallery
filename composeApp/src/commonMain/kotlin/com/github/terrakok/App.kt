@@ -29,8 +29,13 @@ import androidx.compose.material3.TopAppBarDefaults
 import androidx.compose.material3.rememberBottomSheetScaffoldState
 import androidx.compose.material3.BottomSheetScaffold
 import androidx.compose.material3.BottomSheetScaffoldState
+import androidx.compose.material3.DrawerState
+import androidx.compose.material3.DrawerValue
+import androidx.compose.material3.ModalDrawerSheet
+import androidx.compose.material3.ModalNavigationDrawer
 import androidx.compose.material3.SheetState
 import androidx.compose.material3.SheetValue
+import androidx.compose.material3.rememberDrawerState
 import androidx.compose.material3.rememberModalBottomSheetState
 import androidx.compose.material3.rememberStandardBottomSheetState
 import androidx.compose.runtime.Composable
@@ -53,6 +58,9 @@ const val narrowScreenWidthThreshold = 1300
 
 val LocalSnackbarHostState =
     compositionLocalOf<SnackbarHostState> { error("SnackbarHostState is not found") }
+
+val LocalDrawerState =
+    compositionLocalOf<DrawerState> { error("DrawerState is not found") }
 
 @OptIn(ExperimentalMaterial3Api::class)
 val LocalBottomSheetScaffoldState =
@@ -80,70 +88,110 @@ internal fun App() = AppTheme {
     var selectedScreen by remember { mutableStateOf(screens[0]) }
     val scrollBehavior = TopAppBarDefaults.pinnedScrollBehavior()
 
-    Scaffold(
-        modifier = Modifier
-            .nestedScroll(scrollBehavior.nestedScrollConnection)
-            .onGloballyPositioned {
-                screenWidth = it.size.width
+    val scaffoldState = rememberBottomSheetScaffoldState(
+        rememberStandardBottomSheetState(SheetValue.Hidden, skipHiddenState = false)
+    )
+    val drawerState = rememberDrawerState(initialValue = DrawerValue.Closed)
+    ModalNavigationDrawer(
+        drawerState = drawerState,
+        drawerContent = {
+            ModalDrawerSheet { NavigationDrawerContent() }
+        },
+    ) {
+        Scaffold(
+            modifier = Modifier
+                .nestedScroll(scrollBehavior.nestedScrollConnection)
+                .onGloballyPositioned {
+                    screenWidth = it.size.width
+                },
+            snackbarHost = {
+                SnackbarHost(hostState = snackbarHostState)
             },
-        snackbarHost = {
-            SnackbarHost(hostState = snackbarHostState)
-        },
-        topBar = {
-            @Composable
-            fun RowScope.actions() {
-                IconButton(
-                    onClick = { openUrl("https://github.com/terrakok/compose-material-3-gallery") }
-                ) {
-                    Icon(
-                        Icons.Default.DocumentScanner,
-                        contentDescription = null
-                    )
-                }
-                var isDark by LocalThemeIsDark.current
-                IconButton(
-                    onClick = { isDark = !isDark }
-                ) {
-                    Icon(
-                        if (isDark) Icons.Default.LightMode else Icons.Default.DarkMode,
-                        contentDescription = "Toggle brightness"
-                    )
-                }
-                ChooseSeedColorButton()
-                IconButton(
-                    onClick = {}
-                ) {
-                    Icon(
-                        Icons.Default.Image,
-                        contentDescription = "Choose accent image"
-                    )
-                }
-            }
-
-            if (screenWidth <= narrowScreenWidthThreshold) {
-                TopAppBar(
-                    title = { Text(text = "Material 3") },
-                    scrollBehavior = scrollBehavior,
-                    actions = { actions() }
-                )
-            } else {
-                CenterAlignedTopAppBar(
-                    title = { Text(text = "Material 3") },
-                    scrollBehavior = scrollBehavior,
-                    actions = { actions() }
-                )
-            }
-        },
-        content = {
-            Row(
-                modifier = Modifier.padding(it)
-            ) {
-                if (screenWidth > narrowScreenWidthThreshold) {
-                    NavigationRail(
-                        modifier = Modifier.padding(6.dp)
+            topBar = {
+                @Composable
+                fun RowScope.actions() {
+                    IconButton(
+                        onClick = { openUrl("https://github.com/terrakok/compose-material-3-gallery") }
                     ) {
+                        Icon(
+                            Icons.Default.DocumentScanner,
+                            contentDescription = null
+                        )
+                    }
+                    var isDark by LocalThemeIsDark.current
+                    IconButton(
+                        onClick = { isDark = !isDark }
+                    ) {
+                        Icon(
+                            if (isDark) Icons.Default.LightMode else Icons.Default.DarkMode,
+                            contentDescription = "Toggle brightness"
+                        )
+                    }
+                    ChooseSeedColorButton()
+                    IconButton(
+                        onClick = {}
+                    ) {
+                        Icon(
+                            Icons.Default.Image,
+                            contentDescription = "Choose accent image"
+                        )
+                    }
+                }
+
+                if (screenWidth <= narrowScreenWidthThreshold) {
+                    TopAppBar(
+                        title = { Text(text = "Material 3") },
+                        scrollBehavior = scrollBehavior,
+                        actions = { actions() }
+                    )
+                } else {
+                    CenterAlignedTopAppBar(
+                        title = { Text(text = "Material 3") },
+                        scrollBehavior = scrollBehavior,
+                        actions = { actions() }
+                    )
+                }
+            },
+            content = {
+                Row(
+                    modifier = Modifier.padding(it)
+                ) {
+                    if (screenWidth > narrowScreenWidthThreshold) {
+                        NavigationRail(
+                            modifier = Modifier.padding(6.dp)
+                        ) {
+                            screens.forEach { screen ->
+                                NavigationRailItem(
+                                    icon = { Icon(screen.icon, contentDescription = screen.title) },
+                                    label = { Text(screen.title) },
+                                    selected = selectedScreen == screen,
+                                    onClick = {
+                                        scrollBehavior.state.contentOffset = 0f
+                                        selectedScreen = screen
+                                    }
+                                )
+                            }
+                        }
+                    }
+                    BottomSheetScaffold(
+                        scaffoldState = scaffoldState,
+                        sheetContent = { BottomSheetContent() }
+                    ) {
+                        CompositionLocalProvider(
+                            LocalSnackbarHostState provides snackbarHostState,
+                            LocalBottomSheetScaffoldState provides scaffoldState,
+                            LocalDrawerState provides drawerState
+                        ) {
+                            selectedScreen.content()
+                        }
+                    }
+                }
+            },
+            bottomBar = {
+                if (screenWidth <= narrowScreenWidthThreshold) {
+                    NavigationBar {
                         screens.forEach { screen ->
-                            NavigationRailItem(
+                            NavigationBarItem(
                                 icon = { Icon(screen.icon, contentDescription = screen.title) },
                                 label = { Text(screen.title) },
                                 selected = selectedScreen == screen,
@@ -155,59 +203,9 @@ internal fun App() = AppTheme {
                         }
                     }
                 }
-                val scaffoldState = rememberBottomSheetScaffoldState(
-                    rememberStandardBottomSheetState(SheetValue.Hidden, skipHiddenState = false)
-                )
-                BottomSheetScaffold(
-                    scaffoldState = scaffoldState,
-                    sheetContent = { BottomSheetContent() }
-                ) {
-                    CompositionLocalProvider(
-                        LocalSnackbarHostState provides snackbarHostState,
-                        LocalBottomSheetScaffoldState provides scaffoldState
-                    ) {
-                        selectedScreen.content()
-                    }
-                }
             }
-        },
-        bottomBar = {
-            if (screenWidth <= narrowScreenWidthThreshold) {
-                NavigationBar {
-                    screens.forEach { screen ->
-                        NavigationBarItem(
-                            icon = { Icon(screen.icon, contentDescription = screen.title) },
-                            label = { Text(screen.title) },
-                            selected = selectedScreen == screen,
-                            onClick = {
-                                scrollBehavior.state.contentOffset = 0f
-                                selectedScreen = screen
-                            }
-                        )
-                    }
-                }
-            }
-        }
-    )
+        )
+    }
 }
-
-//@Composable
-//@ExperimentalMaterial3Api
-//private fun rememberSheetState(
-//    skipPartiallyExpanded: Boolean = false,
-//    confirmValueChange: (SheetValue) -> Boolean = { true },
-//    initialValue: SheetValue = SheetValue.Hidden,
-//    skipHiddenState: Boolean = false,
-//): SheetState {
-//    return rememberSaveable(
-//        skipPartiallyExpanded, confirmValueChange,
-//        saver = SheetState.Saver(
-//            skipPartiallyExpanded = skipPartiallyExpanded,
-//            confirmValueChange = confirmValueChange
-//        )
-//    ) {
-//        SheetState(skipPartiallyExpanded, initialValue, confirmValueChange, skipHiddenState)
-//    }
-//}
 
 internal expect fun openUrl(url: String?)
