@@ -1,6 +1,9 @@
 package com.github.terrakok
 
+import androidx.compose.foundation.clickable
 import androidx.compose.foundation.layout.*
+import androidx.compose.foundation.selection.selectable
+import androidx.compose.foundation.selection.selectableGroup
 import androidx.compose.material.icons.Icons
 import androidx.compose.material.icons.filled.Close
 import androidx.compose.material.icons.filled.Done
@@ -9,6 +12,7 @@ import androidx.compose.material3.*
 import androidx.compose.runtime.*
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
+import androidx.compose.ui.semantics.Role
 import androidx.compose.ui.state.ToggleableState
 import androidx.compose.ui.unit.dp
 
@@ -19,6 +23,12 @@ private val chipsInfoUrl = "https://developer.android.com/jetpack/compose/compon
 
 private val datePickerInfoUrl =
     "https://developer.android.com/reference/kotlin/androidx/compose/material3/package-summary#DatePicker(androidx.compose.material3.DatePickerState,androidx.compose.ui.Modifier,androidx.compose.material3.DatePickerFormatter,kotlin.Function0,kotlin.Function0,kotlin.Boolean,androidx.compose.material3.DatePickerColors)"
+
+private val menusInfoUrl =
+    "https://developer.android.com/reference/kotlin/androidx/compose/material3/package-summary#DropdownMenu(kotlin.Boolean,kotlin.Function0,androidx.compose.ui.Modifier,androidx.compose.ui.unit.DpOffset,androidx.compose.foundation.ScrollState,androidx.compose.ui.window.PopupProperties,kotlin.Function1)"
+
+private val radioButtonInfoUrl =
+    "https://developer.android.com/reference/kotlin/androidx/compose/material3/package-summary#RadioButton(kotlin.Boolean,kotlin.Function0,androidx.compose.ui.Modifier,kotlin.Boolean,androidx.compose.material3.RadioButtonColors,androidx.compose.foundation.interaction.MutableInteractionSource)"
 
 @Composable
 fun Selection() {
@@ -42,6 +52,67 @@ fun Selection() {
             infoUrl = datePickerInfoUrl
         ) {
             DatePickerDemo()
+        }
+
+        ChildSection(
+            title = "Menus (TODO)",
+            infoUrl = menusInfoUrl
+        ) {
+        }
+
+        ChildSection(
+            title = "Radio buttons",
+            infoUrl = radioButtonInfoUrl
+        ) {
+            RadioButtonsDemo()
+        }
+    }
+}
+
+
+
+private val radioOptions = listOf("Option 1", "Option 2", "Option 3")
+@Composable
+private fun RadioButtonsDemo() {
+    val (selectedOption, onOptionSelected) = remember { mutableStateOf(radioOptions[0]) }
+
+    OutlinedCard {
+        Column(
+            modifier = Modifier
+                .selectableGroup()
+                .requiredWidthIn(400.dp)
+                .width(600.dp)
+                .padding(16.dp),
+        ) {
+
+            radioOptions.forEachIndexed { ix, text ->
+                Row(
+                    Modifier
+                        .fillMaxWidth()
+                        .height(56.dp)
+                        .selectable(
+                            enabled = ix < 2,
+                            selected = (text == selectedOption),
+                            onClick = { onOptionSelected(text) },
+                            role = Role.RadioButton
+                        )
+                        .padding(horizontal = 16.dp),
+                    verticalAlignment = Alignment.CenterVertically
+                ) {
+                    RadioButton(
+                        enabled = ix < 2,
+                        selected = (text == selectedOption),
+                        onClick = null // null recommended for accessibility with screenreaders
+                    )
+                    Text(
+                        text = text,
+                        style = MaterialTheme.typography.bodyLarge,
+                        modifier = Modifier.padding(start = 16.dp),
+                        color = MaterialTheme.colorScheme.onSurface.copy(alpha = if (ix < 2) 1f else 0.5f)
+                    )
+                }
+            }
+
         }
     }
 }
@@ -179,47 +250,55 @@ private fun CheckboxesDemo() {
                 .padding(16.dp)
         ) {
 
-            Row(modifier = Modifier.fillMaxWidth().padding(start = 16.dp),
+            val state1 = remember { mutableStateOf(true) }
+            Row(modifier = Modifier.fillMaxWidth()
+                .height(56.dp)
+                .clickable { state1.value = !state1.value }
+                .padding(16.dp),
                 horizontalArrangement = Arrangement.SpaceBetween,
                 verticalAlignment = Alignment.CenterVertically
             ) {
-                val state = remember { mutableStateOf(true) }
                 Text("Option 1")
                 Checkbox(
-                    checked = state.value,
-                    onCheckedChange = { state.value = it }
+                    checked = state1.value,
+                    onCheckedChange = null
                 )
             }
 
-            Row(modifier = Modifier.fillMaxWidth().padding(start = 16.dp),
+            val state2 = remember { mutableStateOf(ToggleableState.Indeterminate) }
+            Row(modifier = Modifier.fillMaxWidth()
+                .height(56.dp)
+                .clickable { state2.value = state2.value.nextState() }
+                .padding(16.dp),
                 horizontalArrangement = Arrangement.SpaceBetween,
                 verticalAlignment = Alignment.CenterVertically
             ) {
-                val state = remember { mutableStateOf(ToggleableState.Indeterminate) }
                 Text("Option 2")
                 TriStateCheckbox(
-                    state = state.value,
-                    onClick = {
-                        state.value = state.value.nextState()
-                    }
+                    state = state2.value,
+                    onClick = null
                 )
             }
 
-            Row(modifier = Modifier.fillMaxWidth().padding(start = 16.dp),
+            val state3 = remember { mutableStateOf(ToggleableState.Off) }
+            Row(modifier = Modifier.fillMaxWidth()
+                .height(56.dp)
+                .clickable { state3.value = state3.value.nextState() }
+                .padding(16.dp),
                 horizontalArrangement = Arrangement.SpaceBetween,
                 verticalAlignment = Alignment.CenterVertically
             ) {
-                val state = remember { mutableStateOf(ToggleableState.Off) }
                 Text("Option 3")
                 TriStateCheckbox(
-                    state = state.value,
-                    onClick = {
-                        state.value = state.value.nextState()
-                    }
+                    state = state3.value,
+                    onClick = null
                 )
             }
 
-            Row(modifier = Modifier.fillMaxWidth().padding(start = 16.dp),
+            Row(modifier = Modifier.fillMaxWidth()
+                .height(56.dp)
+                .clickable(enabled = false) { }
+                .padding(16.dp),
                 horizontalArrangement = Arrangement.SpaceBetween,
                 verticalAlignment = Alignment.CenterVertically
             ) {
@@ -227,7 +306,7 @@ private fun CheckboxesDemo() {
                 Checkbox(
                     checked = true,
                     enabled = false,
-                    onCheckedChange = {}
+                    onCheckedChange = null
                 )
             }
         }
