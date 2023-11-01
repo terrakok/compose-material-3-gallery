@@ -29,12 +29,17 @@ import androidx.compose.material3.TopAppBarDefaults
 import androidx.compose.material3.rememberBottomSheetScaffoldState
 import androidx.compose.material3.BottomSheetScaffold
 import androidx.compose.material3.BottomSheetScaffoldState
+import androidx.compose.material3.SheetState
+import androidx.compose.material3.SheetValue
+import androidx.compose.material3.rememberModalBottomSheetState
+import androidx.compose.material3.rememberStandardBottomSheetState
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.CompositionLocalProvider
 import androidx.compose.runtime.compositionLocalOf
 import androidx.compose.runtime.getValue
 import androidx.compose.runtime.mutableStateOf
 import androidx.compose.runtime.remember
+import androidx.compose.runtime.saveable.rememberSaveable
 import androidx.compose.runtime.setValue
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.vector.ImageVector
@@ -150,13 +155,12 @@ internal fun App() = AppTheme {
                         }
                     }
                 }
-                val scaffoldState = rememberBottomSheetScaffoldState()
+                val scaffoldState = rememberBottomSheetScaffoldState(
+                    rememberStandardBottomSheetState(SheetValue.Hidden, skipHiddenState = false)
+                )
                 BottomSheetScaffold(
                     scaffoldState = scaffoldState,
-                    sheetPeekHeight = 0.dp,
-                    sheetContent = {
-                        BottomSheetContent()
-                    }
+                    sheetContent = { BottomSheetContent() }
                 ) {
                     CompositionLocalProvider(
                         LocalSnackbarHostState provides snackbarHostState,
@@ -186,5 +190,24 @@ internal fun App() = AppTheme {
         }
     )
 }
+
+//@Composable
+//@ExperimentalMaterial3Api
+//private fun rememberSheetState(
+//    skipPartiallyExpanded: Boolean = false,
+//    confirmValueChange: (SheetValue) -> Boolean = { true },
+//    initialValue: SheetValue = SheetValue.Hidden,
+//    skipHiddenState: Boolean = false,
+//): SheetState {
+//    return rememberSaveable(
+//        skipPartiallyExpanded, confirmValueChange,
+//        saver = SheetState.Saver(
+//            skipPartiallyExpanded = skipPartiallyExpanded,
+//            confirmValueChange = confirmValueChange
+//        )
+//    ) {
+//        SheetState(skipPartiallyExpanded, initialValue, confirmValueChange, skipHiddenState)
+//    }
+//}
 
 internal expect fun openUrl(url: String?)

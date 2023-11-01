@@ -52,14 +52,13 @@ fun ChooseSeedColorButton() {
                     .padding(vertical = 8.dp)
                     .width(IntrinsicSize.Max)
             ) {
-                val seedColorState = LocalSeedColor.current
-                val seedColor = seedColorState.value
-                SeedColor.values().forEach { color ->
+                var seedColor by LocalSeedColor.current
+                SeedColor.entries.forEach { color ->
                     Row(
                         Modifier
                             .fillMaxWidth()
                             .clickable(enabled = seedColor != color) {
-                                seedColorState.value = color
+                                seedColor = color
                                 isSeedChooserOpen = false
                             }
                             .then(if (seedColor == color) Modifier.alpha(0.6f) else Modifier)

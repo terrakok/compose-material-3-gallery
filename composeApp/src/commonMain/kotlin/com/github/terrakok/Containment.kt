@@ -281,21 +281,20 @@ private fun BottomSheetDemo() {
                 content = { Text("Show modal bottom sheet") }
             )
 
-            var bottomSheetShown by remember { mutableStateOf(false) }
             val scope = rememberCoroutineScope()
-            val bottomSheetScaffoldState = LocalBottomSheetScaffoldState.current
+            val bottomSheetScaffoldState = LocalBottomSheetScaffoldState.current.bottomSheetState
+            val bottomSheetShown = bottomSheetScaffoldState.currentValue != SheetValue.Hidden
             TextButton(
                 modifier = Modifier
                     .padding(horizontal = 8.dp, vertical = 4.dp)
                     .weight(1f),
                 enabled = true,
                 onClick = {
-                    bottomSheetShown = !bottomSheetShown
                     scope.launch {
                         if (bottomSheetShown) {
-                            bottomSheetScaffoldState.bottomSheetState.expand()
+                            bottomSheetScaffoldState.hide()
                         } else {
-                            bottomSheetScaffoldState.bottomSheetState.partialExpand()
+                            bottomSheetScaffoldState.expand()
                         }
                     }
                 },
@@ -343,7 +342,7 @@ internal fun ColumnScope.BottomSheetContent() {
         )
         BottomSheetButton(
             title = "Favorite",
-            icon = Icons.Outlined.Favorite
+            icon = Icons.Outlined.FavoriteBorder
         )
     }
 }

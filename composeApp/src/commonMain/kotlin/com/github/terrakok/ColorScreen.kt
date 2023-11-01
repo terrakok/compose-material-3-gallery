@@ -13,13 +13,14 @@ import androidx.compose.material3.CardDefaults
 import androidx.compose.material3.MaterialTheme
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
+import androidx.compose.runtime.getValue
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.text.style.TextAlign
 import androidx.compose.ui.unit.dp
-import com.github.terrakok.theme.DarkColorScheme
-import com.github.terrakok.theme.LightColorScheme
+import com.github.terrakok.theme.LocalSeedColor
+import com.materialkolor.dynamicColorScheme
 
 private data class ColorInfo(
     val title: String,
@@ -210,7 +211,13 @@ fun ColorScreen() {
         }
         items(items) {
             Row {
-                MaterialTheme(colorScheme = LightColorScheme) {
+                val seed by LocalSeedColor.current
+                MaterialTheme(
+                    colorScheme = dynamicColorScheme(
+                        seedColor = seed.value,
+                        isDark = false
+                    )
+                ) {
                     PaletteCard(
                         modifier = Modifier
                             .padding(8.dp)
@@ -218,7 +225,12 @@ fun ColorScreen() {
                         list = it
                     )
                 }
-                MaterialTheme(colorScheme = DarkColorScheme) {
+                MaterialTheme(
+                    colorScheme = dynamicColorScheme(
+                        seedColor = seed.value,
+                        isDark = true
+                    )
+                ) {
                     PaletteCard(
                         modifier = Modifier
                             .padding(8.dp)
