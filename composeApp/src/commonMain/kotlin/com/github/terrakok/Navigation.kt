@@ -4,6 +4,7 @@ import androidx.compose.foundation.BorderStroke
 import androidx.compose.foundation.background
 import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.Column
+import androidx.compose.foundation.layout.RowScope
 import androidx.compose.foundation.layout.Spacer
 import androidx.compose.foundation.layout.height
 import androidx.compose.foundation.layout.padding
@@ -126,6 +127,9 @@ private fun GalleryBottomAppBar() {
         ) {
             BottomAppBar(
                 actions = {
+                    IconButton(onClick = { /* do something */ }) {
+                        Icon(Icons.Filled.MoreVert, contentDescription = null)
+                    }
                     IconButton(onClick = { /* do something */ }) {
                         Icon(Icons.Filled.Search, contentDescription = null)
                     }
@@ -480,6 +484,33 @@ private fun GalleryTopAppBars() {
                 }
             )
             Spacer(Modifier.size(16.dp))
+
+            @Composable fun RowScope.Actions() {
+                IconButton(
+                    onClick = {}
+                ) {
+                    Icon(
+                        imageVector = Icons.Default.AttachFile,
+                        contentDescription = null
+                    )
+                }
+                IconButton(
+                    onClick = {}
+                ) {
+                    Icon(
+                        imageVector = Icons.Default.Event,
+                        contentDescription = null
+                    )
+                }
+                IconButton(
+                    onClick = {}
+                ) {
+                    Icon(
+                        imageVector = Icons.Default.MoreVert,
+                        contentDescription = null
+                    )
+                }
+            }
             TopAppBar(
                 colors = TopAppBarDefaults.topAppBarColors(
                     containerColor = MaterialTheme.colorScheme.secondaryContainer
@@ -495,32 +526,7 @@ private fun GalleryTopAppBars() {
                     }
                 },
                 title = { Text("Small") },
-                actions = {
-                    IconButton(
-                        onClick = {}
-                    ) {
-                        Icon(
-                            imageVector = Icons.Default.AttachFile,
-                            contentDescription = null
-                        )
-                    }
-                    IconButton(
-                        onClick = {}
-                    ) {
-                        Icon(
-                            imageVector = Icons.Default.Event,
-                            contentDescription = null
-                        )
-                    }
-                    IconButton(
-                        onClick = {}
-                    ) {
-                        Icon(
-                            imageVector = Icons.Default.MoreVert,
-                            contentDescription = null
-                        )
-                    }
-                }
+                actions = { Actions() }
             )
             Spacer(Modifier.size(16.dp))
             MediumTopAppBar(
@@ -538,32 +544,7 @@ private fun GalleryTopAppBars() {
                     }
                 },
                 title = { Text("Medium") },
-                actions = {
-                    IconButton(
-                        onClick = {}
-                    ) {
-                        Icon(
-                            imageVector = Icons.Default.AttachFile,
-                            contentDescription = null
-                        )
-                    }
-                    IconButton(
-                        onClick = {}
-                    ) {
-                        Icon(
-                            imageVector = Icons.Default.Event,
-                            contentDescription = null
-                        )
-                    }
-                    IconButton(
-                        onClick = {}
-                    ) {
-                        Icon(
-                            imageVector = Icons.Default.MoreVert,
-                            contentDescription = null
-                        )
-                    }
-                }
+                actions = { Actions() }
             )
             Spacer(Modifier.size(16.dp))
             LargeTopAppBar(
@@ -581,32 +562,7 @@ private fun GalleryTopAppBars() {
                     }
                 },
                 title = { Text("Large") },
-                actions = {
-                    IconButton(
-                        onClick = {}
-                    ) {
-                        Icon(
-                            imageVector = Icons.Default.AttachFile,
-                            contentDescription = null
-                        )
-                    }
-                    IconButton(
-                        onClick = {}
-                    ) {
-                        Icon(
-                            imageVector = Icons.Default.Event,
-                            contentDescription = null
-                        )
-                    }
-                    IconButton(
-                        onClick = {}
-                    ) {
-                        Icon(
-                            imageVector = Icons.Default.MoreVert,
-                            contentDescription = null
-                        )
-                    }
-                }
+                actions = { Actions() }
             )
         }
     }
