@@ -1,21 +1,16 @@
 package com.github.terrakok
 
-import androidx.compose.foundation.background
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.Row
 import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.layout.requiredWidthIn
-import androidx.compose.foundation.layout.size
 import androidx.compose.foundation.layout.width
-import androidx.compose.foundation.shape.RoundedCornerShape
 import androidx.compose.material.icons.Icons
 import androidx.compose.material.icons.filled.Close
 import androidx.compose.material.icons.filled.Search
-import androidx.compose.material.icons.outlined.Info
 import androidx.compose.material3.Icon
 import androidx.compose.material3.IconButton
-import androidx.compose.material3.MaterialTheme
 import androidx.compose.material3.OutlinedCard
 import androidx.compose.material3.OutlinedTextField
 import androidx.compose.material3.Text
@@ -25,38 +20,19 @@ import androidx.compose.runtime.getValue
 import androidx.compose.runtime.mutableStateOf
 import androidx.compose.runtime.remember
 import androidx.compose.runtime.setValue
-import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.text.style.TextOverflow
 import androidx.compose.ui.unit.dp
 
 @Composable
 fun TextInputs() {
-    Column(
-        modifier = Modifier
-            .background(MaterialTheme.colorScheme.surfaceVariant, RoundedCornerShape(16.dp))
-            .fillMaxWidth()
-            .padding(horizontal = 8.dp, vertical = 16.dp),
-        horizontalAlignment = Alignment.CenterHorizontally
-    ) {
-
-        Text(
-            text = "Text inputs",
-            style = MaterialTheme.typography.titleLarge
-        )
-        Row(
-            modifier = Modifier.padding(top = 16.dp, bottom = 8.dp),
-            verticalAlignment = Alignment.CenterVertically
+    ParentSection(title = "Text inputs") {
+        ChildSection(
+            title = "Text fields",
+            infoUrl = "https://developer.android.com/reference/kotlin/androidx/compose/material3/package-summary#textfield"
         ) {
-            Text("Text fields")
-            IconButton(
-                modifier = Modifier.padding(4.dp).size(16.dp),
-                onClick = { openUrl("https://developer.android.com/reference/kotlin/androidx/compose/material3/package-summary#textfield") }
-            ) {
-                Icon(imageVector = Icons.Outlined.Info, contentDescription = null)
-            }
+            TextFields()
         }
-        TextFields()
     }
 }
 
