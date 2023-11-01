@@ -1,5 +1,6 @@
 package com.github.terrakok
 
+import androidx.compose.foundation.background
 import androidx.compose.foundation.clickable
 import androidx.compose.foundation.layout.*
 import androidx.compose.foundation.selection.selectable
@@ -16,6 +17,8 @@ import androidx.compose.ui.Modifier
 import androidx.compose.ui.semantics.Role
 import androidx.compose.ui.state.ToggleableState
 import androidx.compose.ui.unit.dp
+import androidx.compose.ui.window.Dialog
+import androidx.compose.ui.window.DialogProperties
 
 private val checkboxesInfoUrl =
     "https://developer.android.com/reference/kotlin/androidx/compose/material3/package-summary#Checkbox(kotlin.Boolean,kotlin.Function1,androidx.compose.ui.Modifier,kotlin.Boolean,androidx.compose.material3.CheckboxColors,androidx.compose.foundation.interaction.MutableInteractionSource)"
@@ -127,29 +130,24 @@ private fun TimePickerDemo() {
     if (openDialog) {
         val state = rememberTimePickerState()
 
-        // TODO: Use TimePickerDialog when we update to a newer version of material3
-        DatePickerDialog(
-            onDismissRequest = { openDialog = false },
-            confirmButton = {
-                TextButton(onClick = {
-                    openDialog = false
-                }) {
-                    Text("OK")
-                }
-            },
-            dismissButton = {
-                TextButton(onClick = {
-                    openDialog = false
-                }) {
-                    Text("Cancel")
-                }
-            },
-            content = {
-                Box(modifier = Modifier.padding(32.dp)) {
-                    TimePicker(state)
+        // TODO: Use TimePickerDialog when we update to a newer version of material3. It's not available in 1.1.2
+        Dialog(onDismissRequest = { openDialog = false }) {
+            Card(Modifier.background(MaterialTheme.colorScheme.background).size(400.dp, height = 500.dp)) {
+                Box(modifier = Modifier.fillMaxSize().padding(16.dp)) {
+                    TimePicker(state, layoutType = TimePickerLayoutType.Vertical, modifier = Modifier.align(Alignment.Center))
+
+                    Row(modifier = Modifier.align(Alignment.BottomStart).fillMaxWidth(), horizontalArrangement = Arrangement.End) {
+                        TextButton(onClick = { openDialog = false }) {
+                            Text("Cancel")
+                        }
+                        Spacer(modifier = Modifier.width(32.dp))
+                        TextButton(onClick = { openDialog = false }) {
+                            Text("OK")
+                        }
+                    }
                 }
             }
-        )
+        }
     }
 }
 
