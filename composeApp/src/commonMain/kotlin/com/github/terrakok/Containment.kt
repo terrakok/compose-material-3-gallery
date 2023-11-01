@@ -31,6 +31,9 @@ private val cardsInfoUrl =
 private val dialogsInfoUrl =
     "https://developer.android.com/reference/kotlin/androidx/compose/material3/package-summary#AlertDialog(kotlin.Function0,kotlin.Function0,androidx.compose.ui.Modifier,kotlin.Function0,kotlin.Function0,kotlin.Function0,kotlin.Function0,androidx.compose.ui.graphics.Shape,androidx.compose.ui.graphics.Color,androidx.compose.ui.graphics.Color,androidx.compose.ui.graphics.Color,androidx.compose.ui.graphics.Color,androidx.compose.ui.unit.Dp,androidx.compose.ui.window.DialogProperties)"
 
+private val dividersInfoUrl =
+    "https://developer.android.com/reference/kotlin/androidx/compose/material3/package-summary#Divider(androidx.compose.ui.Modifier,androidx.compose.ui.unit.Dp,androidx.compose.ui.graphics.Color)"
+
 @Composable
 fun Containment() {
     ParentSection("Containment") {
@@ -53,6 +56,27 @@ fun Containment() {
             infoUrl = dialogsInfoUrl
         ) {
             DialogsDemo()
+        }
+
+        ChildSection(
+            title = "Dividers",
+            infoUrl = dividersInfoUrl
+        ) {
+            DividersDemo()
+        }
+    }
+}
+
+@Composable
+private fun DividersDemo() {
+    OutlinedCard {
+        Row(
+            modifier = Modifier
+                .requiredWidthIn(400.dp)
+                .width(600.dp)
+                .padding(16.dp, 32.dp, 16.dp, 32.dp)
+        ) {
+            Divider()
         }
     }
 }
