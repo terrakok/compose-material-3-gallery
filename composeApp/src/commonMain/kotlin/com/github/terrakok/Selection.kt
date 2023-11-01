@@ -15,8 +15,10 @@ import androidx.compose.ui.unit.dp
 private val checkboxesInfoUrl =
     "https://developer.android.com/reference/kotlin/androidx/compose/material3/package-summary#Checkbox(kotlin.Boolean,kotlin.Function1,androidx.compose.ui.Modifier,kotlin.Boolean,androidx.compose.material3.CheckboxColors,androidx.compose.foundation.interaction.MutableInteractionSource)"
 
-private val chipsInfoUrl =
-    "https://developer.android.com/jetpack/compose/components/chip"
+private val chipsInfoUrl = "https://developer.android.com/jetpack/compose/components/chip"
+
+private val datePickerInfoUrl =
+    "https://developer.android.com/reference/kotlin/androidx/compose/material3/package-summary#DatePicker(androidx.compose.material3.DatePickerState,androidx.compose.ui.Modifier,androidx.compose.material3.DatePickerFormatter,kotlin.Function0,kotlin.Function0,kotlin.Boolean,androidx.compose.material3.DatePickerColors)"
 
 @Composable
 fun Selection() {
@@ -34,6 +36,60 @@ fun Selection() {
         ) {
             ChipsDemo()
         }
+
+        ChildSection(
+            title = "Date picker",
+            infoUrl = datePickerInfoUrl
+        ) {
+            DatePickerDemo()
+        }
+    }
+}
+
+@OptIn(ExperimentalMaterial3Api::class)
+@Composable
+private fun DatePickerDemo() {
+    var openDialog by remember { mutableStateOf(false) }
+
+    OutlinedCard {
+        Row(
+            modifier = Modifier
+                .requiredWidthIn(400.dp)
+                .width(600.dp)
+                .padding(16.dp),
+            horizontalArrangement = Arrangement.Center
+        ) {
+            TextButton(
+                onClick = { openDialog = true },
+            ) {
+                Text("Show date picker")
+            }
+        }
+    }
+
+
+    if (openDialog) {
+        val state = rememberDatePickerState()
+        DatePickerDialog(
+            onDismissRequest = { openDialog = false },
+            confirmButton = {
+                TextButton(onClick = {
+                    openDialog = false
+                }) {
+                    Text("OK")
+                }
+            },
+            dismissButton = {
+                TextButton(onClick = {
+                    openDialog = false
+                }) {
+                    Text("Cancel")
+                }
+            },
+            content = {
+                DatePicker(state)
+            }
+        )
     }
 }
 
