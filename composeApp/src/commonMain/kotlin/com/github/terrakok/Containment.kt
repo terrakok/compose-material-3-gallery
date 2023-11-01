@@ -10,9 +10,10 @@ import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.vector.ImageVector
 import androidx.compose.ui.unit.dp
+import kotlinx.coroutines.launch
 
 @Composable
-fun Containment(toggleBottomSheet: (Boolean) -> Unit) {
+fun Containment() {
     val modalBottomSheetInfoUrl =
         "https://developer.android.com/reference/kotlin/androidx/compose/material3/package-summary?hl=en#ModalBottomSheet(kotlin.Function0,androidx.compose.ui.Modifier,androidx.compose.material3.SheetState,androidx.compose.ui.unit.Dp,androidx.compose.ui.graphics.Shape,androidx.compose.ui.graphics.Color,androidx.compose.ui.graphics.Color,androidx.compose.ui.unit.Dp,androidx.compose.ui.graphics.Color,kotlin.Function0,androidx.compose.foundation.layout.WindowInsets,androidx.compose.ui.window.SecureFlagPolicy,kotlin.Function1)"
 
@@ -21,14 +22,14 @@ fun Containment(toggleBottomSheet: (Boolean) -> Unit) {
             title = "Bottom sheet",
             infoUrl = modalBottomSheetInfoUrl
         ) {
-            BottomSheetDemo(toggleBottomSheet)
+            BottomSheetDemo()
         }
     }
 }
 
 @OptIn(ExperimentalMaterial3Api::class)
 @Composable
-private fun BottomSheetDemo(toggleBottomSheet: (Boolean) -> Unit) {
+private fun BottomSheetDemo() {
     var isModalSheetOpen by rememberSaveable { mutableStateOf(false) }
 
     OutlinedCard {
@@ -50,7 +51,8 @@ private fun BottomSheetDemo(toggleBottomSheet: (Boolean) -> Unit) {
             )
 
             var bottomSheetShown by remember { mutableStateOf(false) }
-
+            val scope = rememberCoroutineScope()
+            val bottomSheetScaffoldState = LocalBottomSheetScaffoldState.current
             TextButton(
                 modifier = Modifier
                     .padding(horizontal = 8.dp, vertical = 4.dp)
@@ -58,7 +60,13 @@ private fun BottomSheetDemo(toggleBottomSheet: (Boolean) -> Unit) {
                 enabled = true,
                 onClick = {
                     bottomSheetShown = !bottomSheetShown
-                    toggleBottomSheet(bottomSheetShown)
+                    scope.launch {
+                        if (bottomSheetShown) {
+                            bottomSheetScaffoldState.bottomSheetState.expand()
+                        } else {
+                            bottomSheetScaffoldState.bottomSheetState.hide()
+                        }
+                    }
                 },
                 content = {
                     Text("${if(bottomSheetShown) "Hide" else "Show"} bottom sheet")

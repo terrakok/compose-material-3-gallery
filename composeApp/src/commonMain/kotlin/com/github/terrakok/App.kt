@@ -26,6 +26,9 @@ import androidx.compose.material3.SnackbarHostState
 import androidx.compose.material3.Text
 import androidx.compose.material3.TopAppBar
 import androidx.compose.material3.TopAppBarDefaults
+import androidx.compose.material3.rememberBottomSheetScaffoldState
+import androidx.compose.material3.BottomSheetScaffold
+import androidx.compose.material3.BottomSheetScaffoldState
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.CompositionLocalProvider
 import androidx.compose.runtime.compositionLocalOf
@@ -45,6 +48,10 @@ const val narrowScreenWidthThreshold = 1300
 
 val LocalSnackbarHostState =
     compositionLocalOf<SnackbarHostState> { error("SnackbarHostState is not found") }
+
+@OptIn(ExperimentalMaterial3Api::class)
+val LocalBottomSheetScaffoldState =
+    compositionLocalOf<BottomSheetScaffoldState> { error("BottomSheetScaffoldState is not found") }
 
 data class Screen(
     val title: String,
@@ -134,10 +141,20 @@ internal fun App() = AppTheme {
                         }
                     }
                 }
-                CompositionLocalProvider(
-                    LocalSnackbarHostState provides snackbarHostState
+                val scaffoldState = rememberBottomSheetScaffoldState()
+                BottomSheetScaffold(
+                    scaffoldState = scaffoldState,
+                    sheetPeekHeight = 0.dp,
+                    sheetContent = {
+                        BottomSheetContent()
+                    }
                 ) {
-                    selectedScreen.content()
+                    CompositionLocalProvider(
+                        LocalSnackbarHostState provides snackbarHostState,
+                        LocalBottomSheetScaffoldState provides scaffoldState
+                    ) {
+                        selectedScreen.content()
+                    }
                 }
             }
         },
