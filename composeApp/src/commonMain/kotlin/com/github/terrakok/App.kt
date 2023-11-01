@@ -37,12 +37,14 @@ import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.vector.ImageVector
 import androidx.compose.ui.input.nestedscroll.nestedScroll
 import androidx.compose.ui.layout.onGloballyPositioned
+import androidx.compose.ui.unit.dp
 import com.github.terrakok.theme.AppTheme
 import com.github.terrakok.theme.LocalThemeIsDark
 
 const val narrowScreenWidthThreshold = 1300
 
-val LocalSnackbarHostState = compositionLocalOf<SnackbarHostState> { error("SnackbarHostState is not found") }
+val LocalSnackbarHostState =
+    compositionLocalOf<SnackbarHostState> { error("SnackbarHostState is not found") }
 
 data class Screen(
     val title: String,
@@ -116,7 +118,9 @@ internal fun App() = AppTheme {
                 modifier = Modifier.padding(it)
             ) {
                 if (screenWidth > narrowScreenWidthThreshold) {
-                    NavigationRail {
+                    NavigationRail(
+                        modifier = Modifier.padding(6.dp)
+                    ) {
                         screens.forEach { screen ->
                             NavigationRailItem(
                                 icon = { Icon(screen.icon, contentDescription = screen.title) },

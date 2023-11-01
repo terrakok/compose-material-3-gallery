@@ -23,5 +23,7 @@ fun ComponentScreen() {
         TextInputs()
         Spacer(Modifier.size(16.dp))
         Communication()
+        Spacer(Modifier.size(16.dp))
+        Navigation()
     }
 }
