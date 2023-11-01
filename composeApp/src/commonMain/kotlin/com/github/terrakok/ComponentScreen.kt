@@ -3,12 +3,9 @@ package com.github.terrakok
 import androidx.compose.foundation.layout.*
 import androidx.compose.foundation.rememberScrollState
 import androidx.compose.foundation.verticalScroll
-import androidx.compose.material3.*
 import androidx.compose.runtime.Composable
-import androidx.compose.runtime.rememberCoroutineScope
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.unit.dp
-import kotlinx.coroutines.launch
 
 @Composable
 fun ComponentScreen() {
@@ -26,5 +23,7 @@ fun ComponentScreen() {
         Navigation()
         Spacer(Modifier.size(16.dp))
         Containment()
+        Spacer(Modifier.size(16.dp))
+        Selection()
     }
 }
