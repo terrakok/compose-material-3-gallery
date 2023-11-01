@@ -12,6 +12,7 @@ import androidx.compose.foundation.verticalScroll
 import androidx.compose.material3.Card
 import androidx.compose.material3.CardDefaults
 import androidx.compose.material3.MaterialTheme
+import androidx.compose.material3.Surface
 import androidx.compose.material3.Text
 import androidx.compose.material3.surfaceColorAtElevation
 import androidx.compose.runtime.Composable
@@ -78,7 +79,7 @@ fun ElevationScreen() {
         ) { ElevationCard(it) }
         Text(
             modifier = Modifier.padding(8.dp),
-            text = "Shadow Color Only",
+            text = "Surface Shadow Color Only",
             style = MaterialTheme.typography.titleLarge
         )
         NonlazyGrid(
@@ -91,14 +92,12 @@ fun ElevationScreen() {
 
 @Composable
 private fun ElevationCard(item: ElevationItem) {
-    Card(
+    Surface(
         modifier = Modifier
             .aspectRatio(1f)
-            .padding(8.dp)
-            .shadow(item.shadowElevation.dp),
-        colors = CardDefaults.cardColors(
-            MaterialTheme.colorScheme.surfaceColorAtElevation(item.surfaceElevation.dp)
-        ),
+            .padding(8.dp),
+        tonalElevation = item.surfaceElevation.dp,
+        shadowElevation = item.shadowElevation.dp,
         shape = RoundedCornerShape(4.dp)
     ) {
         Column(
