@@ -27,8 +27,8 @@ import androidx.compose.ui.draw.clip
 import androidx.compose.ui.draw.shadow
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.window.Popup
+import com.github.terrakok.theme.LocalSeedColor
 import com.github.terrakok.theme.SeedColor
-import com.github.terrakok.theme.seedColor
 
 @Composable
 fun ChooseSeedColorButton() {
@@ -52,12 +52,14 @@ fun ChooseSeedColorButton() {
                     .padding(vertical = 8.dp)
                     .width(IntrinsicSize.Max)
             ) {
+                val seedColorState = LocalSeedColor.current
+                val seedColor = seedColorState.value
                 SeedColor.values().forEach { color ->
                     Row(
                         Modifier
                             .fillMaxWidth()
                             .clickable(enabled = seedColor != color) {
-                                seedColor = color
+                                seedColorState.value = color
                                 isSeedChooserOpen = false
                             }
                             .then(if (seedColor == color) Modifier.alpha(0.6f) else Modifier)

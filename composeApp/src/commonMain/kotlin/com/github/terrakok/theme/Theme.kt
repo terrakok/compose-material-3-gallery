@@ -104,7 +104,7 @@ private val AppTypography = Typography(
 )
 
 internal val LocalThemeIsDark = compositionLocalOf { mutableStateOf(true) }
-internal var seedColor: SeedColor by mutableStateOf(SeedColor.BASELINE)
+internal val LocalSeedColor = compositionLocalOf { mutableStateOf(SeedColor.BASELINE) }
 
 @Composable
 internal fun AppTheme(
@@ -112,14 +112,16 @@ internal fun AppTheme(
 ) {
     val systemIsDark = isSystemInDarkTheme()
     val isDarkState = remember { mutableStateOf(systemIsDark) }
+    val seedColorState = remember { mutableStateOf(SeedColor.BASELINE) }
     CompositionLocalProvider(
-        LocalThemeIsDark provides isDarkState
+        LocalThemeIsDark provides isDarkState,
+        LocalSeedColor provides seedColorState,
     ) {
         val isDark by isDarkState
         SystemAppearance(!isDark)
         MaterialTheme(
             colorScheme = dynamicColorScheme(
-                seedColor = seedColor.value,
+                seedColor = seedColorState.value.value,
                 isDark = isDark
             ),
             typography = AppTypography,
