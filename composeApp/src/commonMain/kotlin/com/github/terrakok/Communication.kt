@@ -1,19 +1,13 @@
 package com.github.terrakok
 
-import androidx.compose.foundation.background
 import androidx.compose.foundation.layout.Box
-import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.Row
 import androidx.compose.foundation.layout.Spacer
-import androidx.compose.foundation.layout.fillMaxSize
-import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.layout.requiredWidthIn
 import androidx.compose.foundation.layout.size
 import androidx.compose.foundation.layout.width
-import androidx.compose.foundation.shape.RoundedCornerShape
 import androidx.compose.material.icons.Icons
-import androidx.compose.material.icons.filled.Chat
 import androidx.compose.material.icons.filled.ChatBubble
 import androidx.compose.material.icons.filled.ChatBubbleOutline
 import androidx.compose.material.icons.filled.Mail
@@ -21,12 +15,8 @@ import androidx.compose.material.icons.filled.MailOutline
 import androidx.compose.material.icons.filled.Pause
 import androidx.compose.material.icons.filled.People
 import androidx.compose.material.icons.filled.PeopleOutline
-import androidx.compose.material.icons.filled.Place
 import androidx.compose.material.icons.filled.PlayArrow
-import androidx.compose.material.icons.filled.VideoChat
 import androidx.compose.material.icons.filled.Videocam
-import androidx.compose.material.icons.filled.VideocamOff
-import androidx.compose.material.icons.outlined.Info
 import androidx.compose.material.icons.outlined.Videocam
 import androidx.compose.material3.Badge
 import androidx.compose.material3.BadgedBox
@@ -35,11 +25,9 @@ import androidx.compose.material3.ExperimentalMaterial3Api
 import androidx.compose.material3.Icon
 import androidx.compose.material3.IconButton
 import androidx.compose.material3.LinearProgressIndicator
-import androidx.compose.material3.MaterialTheme
 import androidx.compose.material3.NavigationBar
 import androidx.compose.material3.NavigationBarItem
 import androidx.compose.material3.OutlinedCard
-import androidx.compose.material3.SnackbarHostState
 import androidx.compose.material3.Text
 import androidx.compose.material3.TextButton
 import androidx.compose.runtime.Composable
@@ -55,57 +43,25 @@ import kotlinx.coroutines.launch
 
 @Composable
 fun Communication() {
-    Column(
-        modifier = Modifier
-            .background(MaterialTheme.colorScheme.surfaceVariant, RoundedCornerShape(16.dp))
-            .fillMaxWidth()
-            .padding(horizontal = 8.dp, vertical = 16.dp),
-        horizontalAlignment = Alignment.CenterHorizontally
-    ) {
-
-        Text(
-            text = "Communication",
-            style = MaterialTheme.typography.titleLarge
-        )
-        Row(
-            modifier = Modifier.padding(top = 16.dp, bottom = 8.dp),
-            verticalAlignment = Alignment.CenterVertically
+    ParentSection(title = "Communication") {
+        ChildSection(
+            title = "Badges",
+            infoUrl = "https://developer.android.com/reference/kotlin/androidx/compose/material3/package-summary#Badge(androidx.compose.ui.Modifier,androidx.compose.ui.graphics.Color,androidx.compose.ui.graphics.Color,kotlin.Function1)"
         ) {
-            Text("Badges")
-            IconButton(
-                modifier = Modifier.padding(4.dp).size(16.dp),
-                onClick = { openUrl("https://developer.android.com/reference/kotlin/androidx/compose/material3/package-summary#Badge(androidx.compose.ui.Modifier,androidx.compose.ui.graphics.Color,androidx.compose.ui.graphics.Color,kotlin.Function1)") }
-            ) {
-                Icon(imageVector = Icons.Outlined.Info, contentDescription = null)
-            }
+            Badges()
         }
-        Badges()
-        Row(
-            modifier = Modifier.padding(top = 16.dp, bottom = 8.dp),
-            verticalAlignment = Alignment.CenterVertically
+        ChildSection(
+            title = "Progress indicators",
+            infoUrl = "https://developer.android.com/jetpack/compose/components/progress"
         ) {
-            Text("Progress indicators")
-            IconButton(
-                modifier = Modifier.padding(4.dp).size(16.dp),
-                onClick = { openUrl("https://developer.android.com/jetpack/compose/components/progress") }
-            ) {
-                Icon(imageVector = Icons.Outlined.Info, contentDescription = null)
-            }
+            ProgressIndicators()
         }
-        ProgressIndicators()
-        Row(
-            modifier = Modifier.padding(top = 16.dp, bottom = 8.dp),
-            verticalAlignment = Alignment.CenterVertically
+        ChildSection(
+            title = "Snackbar",
+            infoUrl = "https://developer.android.com/jetpack/compose/components/snackbar"
         ) {
-            Text("Snackbar")
-            IconButton(
-                modifier = Modifier.padding(4.dp).size(16.dp),
-                onClick = { openUrl("https://developer.android.com/jetpack/compose/components/snackbar") }
-            ) {
-                Icon(imageVector = Icons.Outlined.Info, contentDescription = null)
-            }
+            SnackbarButton()
         }
-        SnackbarButton()
     }
 }
 

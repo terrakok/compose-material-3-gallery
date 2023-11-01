@@ -1,21 +1,17 @@
 package com.github.terrakok
 
-import androidx.compose.foundation.background
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.Row
 import androidx.compose.foundation.layout.Spacer
-import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.layout.requiredWidthIn
 import androidx.compose.foundation.layout.size
 import androidx.compose.foundation.layout.width
 import androidx.compose.foundation.layout.widthIn
-import androidx.compose.foundation.shape.RoundedCornerShape
 import androidx.compose.material.icons.Icons
 import androidx.compose.material.icons.filled.Add
 import androidx.compose.material.icons.filled.Settings
-import androidx.compose.material.icons.outlined.Info
 import androidx.compose.material3.Button
 import androidx.compose.material3.ButtonDefaults
 import androidx.compose.material3.ElevatedButton
@@ -25,7 +21,6 @@ import androidx.compose.material3.FloatingActionButton
 import androidx.compose.material3.Icon
 import androidx.compose.material3.IconButton
 import androidx.compose.material3.LargeFloatingActionButton
-import androidx.compose.material3.MaterialTheme
 import androidx.compose.material3.OutlinedButton
 import androidx.compose.material3.OutlinedCard
 import androidx.compose.material3.SmallFloatingActionButton
@@ -38,56 +33,25 @@ import androidx.compose.ui.unit.dp
 
 @Composable
 fun Actions() {
-    Column(
-        modifier = Modifier
-            .background(MaterialTheme.colorScheme.surfaceVariant, RoundedCornerShape(16.dp))
-            .fillMaxWidth()
-            .padding(horizontal = 8.dp, vertical = 16.dp),
-        horizontalAlignment = Alignment.CenterHorizontally
-    ) {
-        Text(
-            text = "Actions",
-            style = MaterialTheme.typography.titleLarge
-        )
-        Row(
-            modifier = Modifier.padding(top = 16.dp, bottom = 8.dp),
-            verticalAlignment = Alignment.CenterVertically
+    ParentSection(title = "Actions") {
+        ChildSection(
+            title = "Common buttons",
+            infoUrl = "https://developer.android.com/jetpack/compose/components/button"
         ) {
-            Text("Common buttons")
-            IconButton(
-                modifier = Modifier.padding(4.dp).size(16.dp),
-                onClick = { openUrl("https://developer.android.com/jetpack/compose/components/button") }
-            ) {
-                Icon(imageVector = Icons.Outlined.Info, contentDescription = null)
-            }
+            CommonButtons()
         }
-        CommonButtons()
-        Row(
-            modifier = Modifier.padding(top = 16.dp, bottom = 8.dp),
-            verticalAlignment = Alignment.CenterVertically
+        ChildSection(
+            title = "Floating action buttons",
+            infoUrl = "https://developer.android.com/jetpack/compose/components/fab"
         ) {
-            Text("Floating action buttons")
-            IconButton(
-                modifier = Modifier.padding(4.dp).size(16.dp),
-                onClick = { openUrl("https://developer.android.com/jetpack/compose/components/fab") }
-            ) {
-                Icon(imageVector = Icons.Outlined.Info, contentDescription = null)
-            }
+            FloatingActionButtons()
         }
-        FloatingActionButtons()
-        Row(
-            modifier = Modifier.padding(top = 16.dp, bottom = 8.dp),
-            verticalAlignment = Alignment.CenterVertically
+        ChildSection(
+            title = "Icon buttons",
+            infoUrl = "https://developer.android.com/reference/kotlin/androidx/compose/material3/package-summary#IconButton(kotlin.Function0,androidx.compose.ui.Modifier,kotlin.Boolean,androidx.compose.material3.IconButtonColors,androidx.compose.foundation.interaction.MutableInteractionSource,kotlin.Function0)"
         ) {
-            Text("Icon buttons")
-            IconButton(
-                modifier = Modifier.padding(4.dp).size(16.dp),
-                onClick = { openUrl("https://developer.android.com/reference/kotlin/androidx/compose/material3/package-summary#IconButton(kotlin.Function0,androidx.compose.ui.Modifier,kotlin.Boolean,androidx.compose.material3.IconButtonColors,androidx.compose.foundation.interaction.MutableInteractionSource,kotlin.Function0)") }
-            ) {
-                Icon(imageVector = Icons.Outlined.Info, contentDescription = null)
-            }
+            IconButtons()
         }
-        IconButtons()
     }
 }
 
