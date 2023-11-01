@@ -1,15 +1,14 @@
 package com.github.terrakok
 
-import androidx.compose.foundation.layout.Column
-import androidx.compose.foundation.layout.Spacer
-import androidx.compose.foundation.layout.fillMaxWidth
-import androidx.compose.foundation.layout.size
+import androidx.compose.foundation.layout.*
 import androidx.compose.foundation.rememberScrollState
 import androidx.compose.foundation.verticalScroll
-import androidx.compose.material3.SnackbarHostState
+import androidx.compose.material3.*
 import androidx.compose.runtime.Composable
+import androidx.compose.runtime.rememberCoroutineScope
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.unit.dp
+import kotlinx.coroutines.launch
 
 @Composable
 fun ComponentScreen() {
@@ -25,5 +24,7 @@ fun ComponentScreen() {
         Communication()
         Spacer(Modifier.size(16.dp))
         Navigation()
+        Spacer(Modifier.size(16.dp))
+        Containment()
     }
 }
