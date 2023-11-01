@@ -6,12 +6,14 @@ compose = "1.5.10"
 androidx-appcompat = "1.6.1"
 androidx-activityCompose = "1.8.0"
 compose-uitooling = "1.5.4"
+materialKolor = "1.2.8"
 
 [libraries]
 
 androidx-appcompat = { module = "androidx.appcompat:appcompat", version.ref = "androidx-appcompat" }
 androidx-activityCompose = { module = "androidx.activity:activity-compose", version.ref = "androidx-activityCompose" }
 compose-uitooling = { module = "androidx.compose.ui:ui-tooling", version.ref = "compose-uitooling" }
+materialKolor = { module = "com.materialkolor:material-kolor", version.ref = "materialKolor" }
 
 [plugins]
 
