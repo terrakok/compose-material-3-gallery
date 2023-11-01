@@ -67,5 +67,24 @@ val md_theme_dark_surfaceTint = Color(0xFFD0BCFF)
 val md_theme_dark_outlineVariant = Color(0xFF49454F)
 val md_theme_dark_scrim = Color(0xFF000000)
 
+val md_color_m3_baseline = Color(0xFF6750A4)
+val md_color_indigo = Color(0xFF_3F51B5)
+val md_color_blue = Color(0xFF_21963F)
+val md_color_teal = Color(0xFF_009688)
+val md_color_green = Color(0xFF_4CAF50)
+val md_color_yellow = Color(0xFF_FFEB3B)
+val md_color_orange = Color(0xFF_FF9800)
+val md_color_deep_orange = Color(0xFF_FF5722)
+val md_color_pink = Color(0xFF_E91E63)
 
-val seed = Color(0xFF6750A4)
+enum class SeedColor(val colorName: String, val value: Color) {
+    BASELINE("M3 Baseline", md_color_m3_baseline),
+    INDIGO("Indigo", md_color_indigo),
+    BLUE("Blue", md_color_blue),
+    TEAL("Teal", md_color_teal),
+    GREEN("Green", md_color_green),
+    YELLOW("Yellow", md_color_yellow),
+    ORANGE("Orange", md_color_orange),
+    DEEP_ORANGE("Deep orange", md_color_deep_orange),
+    PINK("Pink", md_color_pink),
+}

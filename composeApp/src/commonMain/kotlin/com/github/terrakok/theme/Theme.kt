@@ -2,6 +2,7 @@ package com.github.terrakok.theme
 
 import androidx.compose.foundation.isSystemInDarkTheme
 import androidx.compose.foundation.shape.RoundedCornerShape
+import androidx.compose.material3.ColorScheme
 import androidx.compose.material3.MaterialTheme
 import androidx.compose.material3.Shapes
 import androidx.compose.material3.Surface
@@ -14,11 +15,13 @@ import androidx.compose.runtime.compositionLocalOf
 import androidx.compose.runtime.getValue
 import androidx.compose.runtime.mutableStateOf
 import androidx.compose.runtime.remember
+import androidx.compose.runtime.setValue
 import androidx.compose.ui.text.TextStyle
 import androidx.compose.ui.text.font.FontFamily
 import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
+import com.materialkolor.dynamicColorScheme
 
 val LightColorScheme = lightColorScheme(
     primary = md_theme_light_primary,
@@ -101,6 +104,7 @@ private val AppTypography = Typography(
 )
 
 internal val LocalThemeIsDark = compositionLocalOf { mutableStateOf(true) }
+internal var seedColor: SeedColor by mutableStateOf(SeedColor.BASELINE)
 
 @Composable
 internal fun AppTheme(
@@ -114,7 +118,10 @@ internal fun AppTheme(
         val isDark by isDarkState
         SystemAppearance(!isDark)
         MaterialTheme(
-            colorScheme = if (isDark) DarkColorScheme else LightColorScheme,
+            colorScheme = dynamicColorScheme(
+                seedColor = seedColor.value,
+                isDark = isDark
+            ),
             typography = AppTypography,
             shapes = AppShapes,
             content = {

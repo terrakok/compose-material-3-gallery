@@ -5,9 +5,9 @@ import androidx.compose.foundation.layout.RowScope
 import androidx.compose.foundation.layout.padding
 import androidx.compose.material.icons.Icons
 import androidx.compose.material.icons.filled.DarkMode
-import androidx.compose.material.icons.filled.Dock
 import androidx.compose.material.icons.filled.DocumentScanner
 import androidx.compose.material.icons.filled.FormatPaint
+import androidx.compose.material.icons.filled.Image
 import androidx.compose.material.icons.filled.LightMode
 import androidx.compose.material.icons.filled.Opacity
 import androidx.compose.material.icons.filled.TextSnippet
@@ -101,7 +101,16 @@ internal fun App() = AppTheme {
                 ) {
                     Icon(
                         if (isDark) Icons.Default.LightMode else Icons.Default.DarkMode,
-                        contentDescription = null
+                        contentDescription = "Toggle brightness"
+                    )
+                }
+                ChooseSeedColorButton()
+                IconButton(
+                    onClick = {}
+                ) {
+                    Icon(
+                        Icons.Default.Image,
+                        contentDescription = "Choose accent image"
                     )
                 }
             }
