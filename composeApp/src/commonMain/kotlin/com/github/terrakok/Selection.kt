@@ -12,11 +12,11 @@ import androidx.compose.material3.*
 import androidx.compose.runtime.*
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
+import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.semantics.Role
 import androidx.compose.ui.state.ToggleableState
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.window.Dialog
-import androidx.compose.ui.window.DialogProperties
 
 private val checkboxesInfoUrl =
     "https://developer.android.com/reference/kotlin/androidx/compose/material3/package-summary#Checkbox(kotlin.Boolean,kotlin.Function1,androidx.compose.ui.Modifier,kotlin.Boolean,androidx.compose.material3.CheckboxColors,androidx.compose.foundation.interaction.MutableInteractionSource)"
@@ -102,6 +102,22 @@ fun Selection() {
     }
 }
 
+
+private val colorsMap = mapOf(
+    "Blue" to Color.Blue,
+    "Pink" to Color.Magenta,
+    "Green" to Color.Green,
+    "Yellow" to Color.Yellow,
+    "Grey" to Color.Gray
+)
+private val iconsMap = mapOf(
+    "Smile" to Icons.Default.SentimentSatisfied,
+    "Cloud" to Icons.Outlined.Cloud,
+    "Brush" to Icons.Outlined.Brush,
+    "Heart" to Icons.Default.Favorite
+)
+
+@OptIn(ExperimentalMaterial3Api::class)
 @Composable
 private fun MenuDemo() {
 
@@ -138,10 +154,134 @@ private fun MenuDemo() {
                 }
             }
         }
+        Spacer(modifier = Modifier.width(16.dp))
+        Box {
+            // TODO: Use CascadeDropDownMenu (maybe NestedDropDownMenu?) when/if it becomes available
+            var menuExpanded by remember { mutableStateOf(false) }
+            IconButton(onClick = {
+                menuExpanded = true
+            }) {
+                Icon(Icons.Default.MoreVert, contentDescription = null)
+            }
+            val items = (1 .. 3).map { "Menu $it" }
+            DropdownMenu(
+                expanded = menuExpanded,
+                onDismissRequest = { menuExpanded = false }
+            ) {
+                items.forEachIndexed { ix, item ->
+                    key(item) {
+                        if (ix == 2) Divider()
+                        DropdownMenuItem(
+                            text = { Text(item) },
+                            onClick = {},
+                        )
+                    }
+                }
+            }
+        }
+    }
+
+    @Composable
+    fun ExposedDropDownMenuDemo() {
+        var selectedColor by remember { mutableStateOf("") }
+        Box {
+            var expanded by remember { mutableStateOf(false) }
+            var textValue by remember { mutableStateOf(selectedColor) }
+            val filteredColors = derivedStateOf {
+                if (textValue.isBlank()) return@derivedStateOf colorsMap
+                return@derivedStateOf colorsMap.filter { it.key.contains(textValue, ignoreCase = true) }
+            }
+
+            ExposedDropdownMenuBox(
+                expanded = expanded,
+                onExpandedChange = { expanded = !expanded },
+            ) {
+                TextField(
+                    modifier = Modifier.width(180.dp).menuAnchor(),
+                    value = textValue,
+                    onValueChange = {
+                        textValue = it
+                        selectedColor = ""
+                    },
+                    placeholder = { Text("Color") },
+                    trailingIcon = { ExposedDropdownMenuDefaults.TrailingIcon(expanded = expanded) },
+                    colors = ExposedDropdownMenuDefaults.textFieldColors(),
+                )
+                ExposedDropdownMenu(
+                    expanded = expanded,
+                    onDismissRequest = { expanded = false },
+                ) {
+                    filteredColors.value.forEach { selectionOption ->
+                        key(selectionOption) {
+                            DropdownMenuItem(
+                                text = { Text(selectionOption.key) },
+                                onClick = {
+                                    selectedColor = selectionOption.key
+                                    textValue = selectionOption.key
+                                    expanded = false
+                                },
+                                contentPadding = ExposedDropdownMenuDefaults.ItemContentPadding,
+                            )
+                        }
+                    }
+                }
+            }
+        }
+
+        Spacer(modifier = Modifier.width(16.dp))
+
+        var selectedIcon by remember { mutableStateOf(iconsMap.keys.first()) }
+        Box {
+            var expanded by remember { mutableStateOf(false) }
+            var textValue by remember { mutableStateOf(selectedIcon) }
+            ExposedDropdownMenuBox(
+                expanded = expanded,
+                onExpandedChange = { expanded = !expanded },
+            ) {
+                TextField(
+                    modifier = Modifier.width(180.dp).menuAnchor(),
+                    value = textValue,
+                    onValueChange = {
+                        textValue = it
+                        selectedIcon = ""
+                    },
+                    label = { Text("Icon") },
+                    leadingIcon = { Icon(Icons.Outlined.Search, null) },
+                    trailingIcon = { ExposedDropdownMenuDefaults.TrailingIcon(expanded = expanded) },
+                    colors = ExposedDropdownMenuDefaults.textFieldColors(),
+                )
+                ExposedDropdownMenu(
+                    expanded = expanded,
+                    onDismissRequest = { expanded = false },
+                ) {
+                    iconsMap.forEach { selectionOption ->
+                        key(selectionOption.key) {
+                            DropdownMenuItem(
+                                text = { Text(selectionOption.key) },
+                                onClick = {
+                                    selectedIcon = selectionOption.key
+                                    textValue = selectionOption.key
+                                    expanded = false
+                                },
+                                contentPadding = ExposedDropdownMenuDefaults.ItemContentPadding,
+                            )
+                        }
+                    }
+                }
+            }
+        }
+
+        Spacer(modifier = Modifier.width(16.dp))
+
+        Icon(
+            imageVector = iconsMap[selectedIcon] ?: iconsMap[iconsMap.keys.first()]!!,
+            tint = colorsMap[selectedColor] ?: colorsMap["Grey"]!!,
+            contentDescription = null
+        )
     }
 
     OutlinedCard {
-        Box(
+        Column(
             modifier = Modifier
                 .selectableGroup()
                 .requiredWidthIn(400.dp)
@@ -153,6 +293,14 @@ private fun MenuDemo() {
                 horizontalArrangement = Arrangement.Center
             ) {
                 DropDownMenuDemo()
+            }
+            Spacer(modifier = Modifier.height(16.dp))
+            Row(
+                modifier = Modifier.fillMaxWidth(),
+                horizontalArrangement = Arrangement.Center,
+                verticalAlignment = Alignment.CenterVertically
+            ) {
+                ExposedDropDownMenuDemo()
             }
         }
     }
@@ -188,9 +336,16 @@ private fun TimePickerDemo() {
         Dialog(onDismissRequest = { openDialog = false }) {
             Card(Modifier.background(MaterialTheme.colorScheme.background).size(400.dp, height = 500.dp)) {
                 Box(modifier = Modifier.fillMaxSize().padding(16.dp)) {
-                    TimePicker(state, layoutType = TimePickerLayoutType.Vertical, modifier = Modifier.align(Alignment.Center))
+                    TimePicker(
+                        state,
+                        layoutType = TimePickerLayoutType.Vertical,
+                        modifier = Modifier.align(Alignment.Center)
+                    )
 
-                    Row(modifier = Modifier.align(Alignment.BottomStart).fillMaxWidth(), horizontalArrangement = Arrangement.End) {
+                    Row(
+                        modifier = Modifier.align(Alignment.BottomStart).fillMaxWidth(),
+                        horizontalArrangement = Arrangement.End
+                    ) {
                         TextButton(onClick = { openDialog = false }) {
                             Text("Cancel")
                         }
