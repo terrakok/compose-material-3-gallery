@@ -36,7 +36,7 @@ private val AppTypography = Typography(
     )
 )
 
-enum class SeedColor(val colorName: String, val value: Color) {
+internal enum class SeedColor(val colorName: String, val value: Color) {
     BASELINE("M3 Baseline", Color(0xFF6750A4)),
     INDIGO("Indigo", Color(0xFF_3F51B5)),
     BLUE("Blue", Color(0xFF_0061A4)),
@@ -48,8 +48,27 @@ enum class SeedColor(val colorName: String, val value: Color) {
     PINK("Pink", Color(0xFF_E91E63)),
 }
 
+internal enum class ColorExtractionImage(val imageName: String, val imageResource: String) {
+    LEAVES("Leaves", "content_based_color_scheme_1.png"),
+    PEONIES("Peonies", "content_based_color_scheme_2.png"),
+    BUBBLES("Bubbles", "content_based_color_scheme_3.png"),
+    SEAWEED("Seaweed", "content_based_color_scheme_4.png"),
+    SEA_GRAPES("Sea Grapes", "content_based_color_scheme_5.png"),
+    PETALS("Petals", "content_based_color_scheme_6.png"),
+}
+
+internal sealed class AppColor {
+    abstract val color: Color
+    data class Seed(val seedColor: SeedColor) : AppColor() {
+        override val color: Color = seedColor.value
+    }
+    data class Image(val image: ColorExtractionImage, override val color: Color) : AppColor()
+}
+
 internal val LocalThemeIsDark = compositionLocalOf { mutableStateOf(true) }
-internal val LocalSeedColor = compositionLocalOf { mutableStateOf(SeedColor.BASELINE) }
+internal val LocalAppColor = compositionLocalOf {
+    mutableStateOf<AppColor>(AppColor.Seed(SeedColor.BASELINE))
+}
 
 @Composable
 internal fun AppTheme(
@@ -57,16 +76,29 @@ internal fun AppTheme(
 ) {
     val systemIsDark = isSystemInDarkTheme()
     val isDarkState = remember { mutableStateOf(systemIsDark) }
-    val seedColorState = remember { mutableStateOf(SeedColor.BASELINE) }
+    val appColorState = remember {
+        mutableStateOf<AppColor>(AppColor.Seed(SeedColor.BASELINE))
+    }
+    val appColor = appColorState.value
     CompositionLocalProvider(
         LocalThemeIsDark provides isDarkState,
-        LocalSeedColor provides seedColorState,
+        LocalAppColor provides appColorState,
     ) {
         val isDark by isDarkState
         SystemAppearance(!isDark)
         MaterialTheme(
             colorScheme = dynamicColorScheme(
-                seedColor = seedColorState.value.value,
+                seedColor = remember(appColor) {
+                    when(appColor) {
+                        is AppColor.Seed -> {
+                            appColor.seedColor.value
+                        }
+                        is AppColor.Image -> {
+
+                            appColor.color
+                        }
+                    }
+                },
                 isDark = isDark
             ),
             typography = AppTypography,

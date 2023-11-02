@@ -27,11 +27,20 @@ import androidx.compose.ui.draw.clip
 import androidx.compose.ui.draw.shadow
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.window.Popup
-import com.github.terrakok.theme.LocalSeedColor
+import com.github.terrakok.theme.AppColor
+import com.github.terrakok.theme.LocalAppColor
 import com.github.terrakok.theme.SeedColor
 
 @Composable
-fun ChooseSeedColorButton() {
+internal fun SelectSeedColorButton() {
+    val appColorState = LocalAppColor.current
+    val appColor = appColorState.value
+    val selectedSeedColor = (appColor as? AppColor.Seed)?.seedColor
+
+    fun onSelected(color: SeedColor) {
+        appColorState.value = AppColor.Seed(color)
+    }
+
     var isSeedChooserOpen by remember { mutableStateOf(false) }
     IconButton(
         onClick = { isSeedChooserOpen = !isSeedChooserOpen }
@@ -52,20 +61,19 @@ fun ChooseSeedColorButton() {
                     .padding(vertical = 8.dp)
                     .width(IntrinsicSize.Max)
             ) {
-                var seedColor by LocalSeedColor.current
                 SeedColor.entries.forEach { color ->
                     Row(
                         Modifier
                             .fillMaxWidth()
-                            .clickable(enabled = seedColor != color) {
-                                seedColor = color
+                            .clickable(enabled = selectedSeedColor != color) {
+                                onSelected(color)
                                 isSeedChooserOpen = false
                             }
-                            .then(if (seedColor == color) Modifier.alpha(0.6f) else Modifier)
+                            .then(if (selectedSeedColor == color) Modifier.alpha(0.6f) else Modifier)
                             .padding(16.dp)
                     ) {
                         Icon(
-                            imageVector = if (seedColor == color) {
+                            imageVector = if (selectedSeedColor == color) {
                                 Icons.Filled.Palette
                             } else {
                                 Icons.Outlined.Palette

@@ -127,15 +127,8 @@ internal fun App() = AppTheme {
                             contentDescription = "Toggle brightness"
                         )
                     }
-                    ChooseSeedColorButton()
-                    IconButton(
-                        onClick = {}
-                    ) {
-                        Icon(
-                            Icons.Default.Image,
-                            contentDescription = "Choose accent image"
-                        )
-                    }
+                    SelectSeedColorButton()
+                    SelectColorExtractionImageButton()
                 }
 
                 if (screenWidth <= narrowScreenWidthThreshold) {
