@@ -7,7 +7,6 @@ plugins {
 }
 
 kotlin {
-    applyDefaultHierarchyTemplate()
     androidTarget {
         compilations.all {
             kotlinOptions {

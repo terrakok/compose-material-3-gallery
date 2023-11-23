@@ -1,8 +1,6 @@
 package com.github.terrakok
 
-import androidx.compose.foundation.layout.Row
-import androidx.compose.foundation.layout.RowScope
-import androidx.compose.foundation.layout.padding
+import androidx.compose.foundation.layout.*
 import androidx.compose.material.icons.Icons
 import androidx.compose.material.icons.filled.DarkMode
 import androidx.compose.material.icons.filled.DocumentScanner
@@ -147,7 +145,7 @@ internal fun App() = AppTheme {
             },
             content = {
                 Row(
-                    modifier = Modifier.padding(it)
+                    modifier = Modifier.padding(it).consumeWindowInsets(WindowInsets.systemBars)
                 ) {
                     if (screenWidth > narrowScreenWidthThreshold) {
                         NavigationRail(

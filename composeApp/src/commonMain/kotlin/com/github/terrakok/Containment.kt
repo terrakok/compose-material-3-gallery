@@ -148,12 +148,10 @@ private fun DialogsDemo() {
     }
 }
 
-@OptIn(ExperimentalComposeUiApi::class)
 private val DefaultDialogProperties = DialogProperties(
     dismissOnBackPress = true,
     dismissOnClickOutside = true,
-    usePlatformDefaultWidth = false,
-    usePlatformInsets = false
+    usePlatformDefaultWidth = false
 )
 
 @OptIn(ExperimentalMaterial3Api::class)
