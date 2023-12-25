@@ -38,10 +38,8 @@ import com.github.terrakok.theme.LocalAppColor
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.launch
 import kotlinx.coroutines.withContext
-import org.jetbrains.compose.resources.LoadState
-import org.jetbrains.compose.resources.orEmpty
-import org.jetbrains.compose.resources.rememberImageBitmap
-import org.jetbrains.compose.resources.resource
+import org.jetbrains.compose.resources.DrawableResource
+import org.jetbrains.compose.resources.imageResource
 
 @Composable
 internal fun SelectColorExtractionImageButton() {
@@ -84,11 +82,7 @@ internal fun SelectColorExtractionImageButton() {
                     .width(IntrinsicSize.Max)
             ) {
                 ColorExtractionImage.entries.forEach { image ->
-                    val loadState = resource(image.imageResource).rememberImageBitmap()
-                    val imageBitmap = when (loadState) {
-                        is LoadState.Success -> loadState.value
-                        else -> null
-                    }
+                    val imageBitmap = imageResource(DrawableResource(image.imageResource))
                     Row(
                         Modifier
                             .fillMaxWidth()
@@ -101,7 +95,7 @@ internal fun SelectColorExtractionImageButton() {
                         verticalAlignment = Alignment.CenterVertically
                     ) {
                         Image(
-                            bitmap = loadState.orEmpty(),
+                            bitmap = imageBitmap,
                             contentDescription = image.imageName,
                             Modifier
                                 .size(40.dp)
