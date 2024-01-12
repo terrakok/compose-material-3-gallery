@@ -1,12 +1,12 @@
 [versions]
 
 kotlin = "1.9.21"
-agp = "8.2.0"
-compose = "1.6.0-dev1347"
+agp = "8.2.1"
+compose = "1.6.0-dev1362"
 androidx-appcompat = "1.6.1"
 androidx-activityCompose = "1.8.2"
 compose-uitooling = "1.5.4"
-materialKolor = "1.2.9"
+materialKolor = "1.4.0-alpha01"
 
 [libraries]
 
