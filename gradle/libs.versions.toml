@@ -6,7 +6,7 @@ compose = "1.6.0-beta01"
 androidx-appcompat = "1.6.1"
 androidx-activityCompose = "1.8.2"
 compose-uitooling = "1.5.4"
-materialKolor = "1.4.0-alpha01"
+materialKolor = "1.4.0-alpha02"
 
 [libraries]
 
