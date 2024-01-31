@@ -82,15 +82,15 @@ internal fun SelectColorExtractionImageButton() {
                     .width(IntrinsicSize.Max)
             ) {
                 ColorExtractionImage.entries.forEach { image ->
-                    val imageBitmap = imageResource(DrawableResource(image.imageResource))
+                    val imageBitmap = imageResource(image.imageResource)
                     Row(
                         Modifier
                             .fillMaxWidth()
-                            .clickable(enabled = selectedImage != image && imageBitmap != null) {
+                            .clickable(enabled = selectedImage != image) {
                                 onSelected(image, imageBitmap)
                                 isChooserOpen = false
                             }
-                            .then(if (selectedImage == image) Modifier.alpha(0.6f) else Modifier)
+                            .run { if (selectedImage == image) alpha(0.6f) else this }
                             .padding(16.dp),
                         verticalAlignment = Alignment.CenterVertically
                     ) {

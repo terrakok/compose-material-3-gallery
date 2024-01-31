@@ -19,6 +19,8 @@ import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import com.materialkolor.dynamicColorScheme
+import material_3_gallery.composeapp.generated.resources.Res
+import org.jetbrains.compose.resources.DrawableResource
 
 private val AppShapes = Shapes(
     extraSmall = RoundedCornerShape(2.dp),
@@ -48,13 +50,13 @@ internal enum class SeedColor(val colorName: String, val value: Color) {
     PINK("Pink", Color(0xFF_E91E63)),
 }
 
-internal enum class ColorExtractionImage(val imageName: String, val imageResource: String) {
-    LEAVES("Leaves", "content_based_color_scheme_1.png"),
-    PEONIES("Peonies", "content_based_color_scheme_2.png"),
-    BUBBLES("Bubbles", "content_based_color_scheme_3.png"),
-    SEAWEED("Seaweed", "content_based_color_scheme_4.png"),
-    SEA_GRAPES("Sea Grapes", "content_based_color_scheme_5.png"),
-    PETALS("Petals", "content_based_color_scheme_6.png"),
+internal enum class ColorExtractionImage(val imageName: String, val imageResource: DrawableResource) {
+    LEAVES("Leaves", Res.drawable.content_based_color_scheme_1),
+    PEONIES("Peonies", Res.drawable.content_based_color_scheme_2),
+    BUBBLES("Bubbles", Res.drawable.content_based_color_scheme_3),
+    SEAWEED("Seaweed", Res.drawable.content_based_color_scheme_4),
+    SEA_GRAPES("Sea Grapes", Res.drawable.content_based_color_scheme_5),
+    PETALS("Petals", Res.drawable.content_based_color_scheme_6),
 }
 
 internal sealed class AppColor {
