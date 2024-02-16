@@ -62,30 +62,15 @@ kotlin {
 
         androidMain {
             dependencies {
-                implementation(libs.androidx.appcompat)
                 implementation(libs.androidx.activityCompose)
-                implementation(libs.compose.uitooling)
             }
         }
 
         jvmMain {
             dependencies {
-                implementation(compose.desktop.common)
                 implementation(compose.desktop.currentOs)
             }
         }
-
-        jsMain {
-            dependencies {
-                implementation(compose.html.core)
-            }
-        }
-
-        iosMain {
-            dependencies {
-            }
-        }
-
     }
 }
 
@@ -103,14 +88,12 @@ android {
     }
     sourceSets["main"].apply {
         manifest.srcFile("src/androidMain/AndroidManifest.xml")
-        res.srcDirs("src/androidMain/resources")
-        resources.srcDirs("src/commonMain/resources")
+        res.srcDirs("src/androidMain/res")
     }
     compileOptions {
         sourceCompatibility = JavaVersion.VERSION_17
         targetCompatibility = JavaVersion.VERSION_17
     }
-    buildToolsVersion = "34.0.0"
 }
 
 compose.desktop {

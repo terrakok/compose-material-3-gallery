@@ -2,17 +2,13 @@
 
 kotlin = "1.9.22"
 agp = "8.2.2"
-compose = "1.6.0-rc01"
-androidx-appcompat = "1.6.1"
+compose = "1.6.0-rc02"
 androidx-activityCompose = "1.8.2"
-compose-uitooling = "1.6.0"
 materialKolor = "1.4.0-rc01"
 
 [libraries]
 
-androidx-appcompat = { module = "androidx.appcompat:appcompat", version.ref = "androidx-appcompat" }
 androidx-activityCompose = { module = "androidx.activity:activity-compose", version.ref = "androidx-activityCompose" }
-compose-uitooling = { module = "androidx.compose.ui:ui-tooling", version.ref = "compose-uitooling" }
 materialKolor = { module = "com.materialkolor:material-kolor", version.ref = "materialKolor" }
 
 [plugins]

@@ -20,6 +20,7 @@ import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import com.materialkolor.dynamicColorScheme
 import material_3_gallery.composeapp.generated.resources.Res
+import material_3_gallery.composeapp.generated.resources.*
 import org.jetbrains.compose.resources.DrawableResource
 
 private val AppShapes = Shapes(
