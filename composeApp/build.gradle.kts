@@ -50,6 +50,7 @@ kotlin {
                 implementation(compose.material3)
                 implementation(compose.materialIconsExtended)
                 implementation(compose.components.resources)
+                implementation(compose.components.uiToolingPreview)
                 implementation(libs.materialKolor)
             }
         }
@@ -63,6 +64,8 @@ kotlin {
         androidMain {
             dependencies {
                 implementation(libs.androidx.activityCompose)
+                implementation(compose.uiTooling)
+                implementation(compose.preview)
             }
         }
 
@@ -93,6 +96,12 @@ android {
     compileOptions {
         sourceCompatibility = JavaVersion.VERSION_17
         targetCompatibility = JavaVersion.VERSION_17
+    }
+    buildFeatures {
+        compose = true
+    }
+    composeOptions {
+        kotlinCompilerExtensionVersion = "1.5.10"
     }
 }
 
