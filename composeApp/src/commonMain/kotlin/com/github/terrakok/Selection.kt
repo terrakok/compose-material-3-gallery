@@ -1,6 +1,5 @@
 package com.github.terrakok
 
-import androidx.compose.foundation.background
 import androidx.compose.foundation.clickable
 import androidx.compose.foundation.layout.*
 import androidx.compose.foundation.selection.selectable
@@ -18,27 +17,27 @@ import androidx.compose.ui.state.ToggleableState
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.window.Dialog
 
-private val checkboxesInfoUrl =
+private const val checkboxesInfoUrl =
     "https://developer.android.com/reference/kotlin/androidx/compose/material3/package-summary#Checkbox(kotlin.Boolean,kotlin.Function1,androidx.compose.ui.Modifier,kotlin.Boolean,androidx.compose.material3.CheckboxColors,androidx.compose.foundation.interaction.MutableInteractionSource)"
 
-private val chipsInfoUrl = "https://developer.android.com/jetpack/compose/components/chip"
+private const val chipsInfoUrl = "https://developer.android.com/jetpack/compose/components/chip"
 
-private val datePickerInfoUrl =
+private const val datePickerInfoUrl =
     "https://developer.android.com/reference/kotlin/androidx/compose/material3/package-summary#DatePicker(androidx.compose.material3.DatePickerState,androidx.compose.ui.Modifier,androidx.compose.material3.DatePickerFormatter,kotlin.Function0,kotlin.Function0,kotlin.Boolean,androidx.compose.material3.DatePickerColors)"
 
-private val menusInfoUrl =
+private const val menusInfoUrl =
     "https://developer.android.com/reference/kotlin/androidx/compose/material3/package-summary#DropdownMenu(kotlin.Boolean,kotlin.Function0,androidx.compose.ui.Modifier,androidx.compose.ui.unit.DpOffset,androidx.compose.foundation.ScrollState,androidx.compose.ui.window.PopupProperties,kotlin.Function1)"
 
-private val radioButtonInfoUrl =
+private const val radioButtonInfoUrl =
     "https://developer.android.com/reference/kotlin/androidx/compose/material3/package-summary#RadioButton(kotlin.Boolean,kotlin.Function0,androidx.compose.ui.Modifier,kotlin.Boolean,androidx.compose.material3.RadioButtonColors,androidx.compose.foundation.interaction.MutableInteractionSource)"
 
-private val sliderInfoUrl =
+private const val sliderInfoUrl =
     "https://developer.android.com/jetpack/compose/components/slider"
 
-private val switchInfoUrl =
+private const val switchInfoUrl =
     "https://developer.android.com/jetpack/compose/components/switch"
 
-private val timePickerInfoUrl =
+private const val timePickerInfoUrl =
     "https://developer.android.com/reference/kotlin/androidx/compose/material3/package-summary#TimePicker(androidx.compose.material3.TimePickerState,androidx.compose.ui.Modifier,androidx.compose.material3.TimePickerColors,androidx.compose.material3.TimePickerLayoutType)"
 
 
@@ -58,6 +57,7 @@ private val sectionsList = listOf(
     ChildSectionItem("Switches", switchInfoUrl) { SwtichesDemo() },
     ChildSectionItem("Time picker", timePickerInfoUrl) { TimePickerDemo() },
 )
+
 @Composable
 fun Selection() {
     ParentSection("Selection") {
@@ -134,14 +134,14 @@ private fun MenuDemo() {
             }) {
                 Icon(Icons.Default.MoreVert, contentDescription = null)
             }
-            val items = (1 .. 3).map { "Menu $it" }
+            val items = (1..3).map { "Menu $it" }
             DropdownMenu(
                 expanded = menuExpanded,
                 onDismissRequest = { menuExpanded = false }
             ) {
                 items.forEachIndexed { ix, item ->
                     key(item) {
-                        if (ix == 2) Divider()
+                        if (ix == 2) HorizontalDivider()
                         DropdownMenuItem(
                             text = { Text(item) },
                             onClick = {},
@@ -305,16 +305,16 @@ private fun TimePickerDemo() {
 
         // TODO: Use TimePickerDialog when we update to a newer version of material3. It's not available in 1.1.2
         Dialog(onDismissRequest = { openDialog = false }) {
-            Card(Modifier.background(MaterialTheme.colorScheme.background).size(400.dp, height = 500.dp)) {
-                Box(modifier = Modifier.fillMaxSize().padding(16.dp)) {
+            Card(shape = MaterialTheme.shapes.extraLarge) {
+                Column(Modifier.padding(16.dp)) {
                     TimePicker(
                         state,
                         layoutType = TimePickerLayoutType.Vertical,
-                        modifier = Modifier.align(Alignment.Center)
+                        modifier = Modifier.align(Alignment.CenterHorizontally)
                     )
 
                     Row(
-                        modifier = Modifier.align(Alignment.BottomStart).fillMaxWidth(),
+                        modifier = Modifier.align(Alignment.End),
                         horizontalArrangement = Arrangement.End
                     ) {
                         TextButton(onClick = { openDialog = false }) {
@@ -527,7 +527,6 @@ private fun DatePickerDemo() {
     }
 }
 
-@OptIn(ExperimentalMaterial3Api::class)
 @Composable
 private fun ChipsDemo() {
 

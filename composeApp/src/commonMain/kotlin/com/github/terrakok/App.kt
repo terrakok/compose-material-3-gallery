@@ -2,6 +2,7 @@ package com.github.terrakok
 
 import androidx.compose.foundation.layout.*
 import androidx.compose.material.icons.Icons
+import androidx.compose.material.icons.automirrored.filled.TextSnippet
 import androidx.compose.material.icons.filled.DarkMode
 import androidx.compose.material.icons.filled.DocumentScanner
 import androidx.compose.material.icons.filled.FormatPaint
@@ -73,7 +74,7 @@ data class Screen(
 val screens = listOf(
     Screen("Components", Icons.Filled.Widgets) { ComponentScreen() },
     Screen("Color", Icons.Filled.FormatPaint) { ColorScreen() },
-    Screen("Typography", Icons.Filled.TextSnippet) { TypographyScreen() },
+    Screen("Typography", Icons.AutoMirrored.Filled.TextSnippet) { TypographyScreen() },
     Screen("Elevation", Icons.Filled.Opacity) { ElevationScreen() },
 )
 

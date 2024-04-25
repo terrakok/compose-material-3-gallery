@@ -21,7 +21,6 @@ import androidx.compose.material.icons.outlined.Videocam
 import androidx.compose.material3.Badge
 import androidx.compose.material3.BadgedBox
 import androidx.compose.material3.CircularProgressIndicator
-import androidx.compose.material3.ExperimentalMaterial3Api
 import androidx.compose.material3.Icon
 import androidx.compose.material3.IconButton
 import androidx.compose.material3.LinearProgressIndicator
@@ -65,7 +64,6 @@ fun Communication() {
     }
 }
 
-@OptIn(ExperimentalMaterial3Api::class)
 @Composable
 fun Badges() {
     OutlinedCard {
@@ -171,9 +169,12 @@ fun ProgressIndicators() {
                 Spacer(modifier = Modifier.size(16.dp))
                 LinearProgressIndicator(modifier = Modifier.weight(1f))
             } else {
-                CircularProgressIndicator(0.7f)
+                CircularProgressIndicator(progress = { 0.7f})
                 Spacer(modifier = Modifier.size(16.dp))
-                LinearProgressIndicator(modifier = Modifier.weight(1f), progress = 0.7f)
+                LinearProgressIndicator(
+                    progress = { 0.7f },
+                    modifier = Modifier.weight(1f),
+                )
             }
         }
     }
