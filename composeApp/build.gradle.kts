@@ -48,6 +48,9 @@ kotlin {
                 implementation(compose.components.resources)
                 implementation(compose.components.uiToolingPreview)
 //                implementation(libs.materialKolor)
+                implementation(project(":libB"))
+//                implementation("org.testkotlin2.libA:libA:1.0.0-SNAPSHOT")
+
             }
         }
 
