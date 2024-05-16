@@ -20,7 +20,7 @@ import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.text.style.TextAlign
 import androidx.compose.ui.unit.dp
 import com.github.terrakok.theme.LocalAppColor
-import com.materialkolor.dynamicColorScheme
+//import com.materialkolor.dynamicColorScheme
 
 private data class ColorInfo(
     val title: String,
@@ -213,10 +213,10 @@ fun ColorScreen() {
             Row {
                 val appColor by LocalAppColor.current
                 MaterialTheme(
-                    colorScheme = dynamicColorScheme(
-                        seedColor = appColor.color,
-                        isDark = false
-                    )
+//                    colorScheme = dynamicColorScheme(
+//                        seedColor = appColor.color,
+//                        isDark = false
+//                    )
                 ) {
                     PaletteCard(
                         modifier = Modifier
@@ -226,10 +226,10 @@ fun ColorScreen() {
                     )
                 }
                 MaterialTheme(
-                    colorScheme = dynamicColorScheme(
-                        seedColor = appColor.color,
-                        isDark = true
-                    )
+//                    colorScheme = dynamicColorScheme(
+//                        seedColor = appColor.color,
+//                        isDark = true
+//                    )
                 ) {
                     PaletteCard(
                         modifier = Modifier

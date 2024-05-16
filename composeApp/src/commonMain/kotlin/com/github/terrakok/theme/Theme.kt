@@ -18,7 +18,7 @@ import androidx.compose.ui.text.font.FontFamily
 import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
-import com.materialkolor.dynamicColorScheme
+//import com.materialkolor.dynamicColorScheme
 import material_3_gallery.composeapp.generated.resources.Res
 import material_3_gallery.composeapp.generated.resources.*
 import org.jetbrains.compose.resources.DrawableResource
@@ -90,20 +90,20 @@ internal fun AppTheme(
         val isDark by isDarkState
         SystemAppearance(!isDark)
         MaterialTheme(
-            colorScheme = dynamicColorScheme(
-                seedColor = remember(appColor) {
-                    when(appColor) {
-                        is AppColor.Seed -> {
-                            appColor.seedColor.value
-                        }
-                        is AppColor.Image -> {
-
-                            appColor.color
-                        }
-                    }
-                },
-                isDark = isDark
-            ),
+//            colorScheme = dynamicColorScheme(
+//                seedColor = remember(appColor) {
+//                    when(appColor) {
+//                        is AppColor.Seed -> {
+//                            appColor.seedColor.value
+//                        }
+//                        is AppColor.Image -> {
+//
+//                            appColor.color
+//                        }
+//                    }
+//                },
+//                isDark = isDark
+//            ),
             typography = AppTypography,
             shapes = AppShapes,
             content = {
