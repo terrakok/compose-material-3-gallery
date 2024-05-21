@@ -1,10 +1,10 @@
 [versions]
 
-kotlin = "2.0.0-RC1"
+kotlin = "2.0.0"
 agp = "8.2.2"
-compose = "1.6.10-beta02"
+compose = "1.6.10"
 androidx-activityCompose = "1.8.2"
-materialKolor = "1.4.4"
+materialKolor = "1.5.1"
 
 [libraries]
 
@@ -14,5 +14,6 @@ materialKolor = { module = "com.materialkolor:material-kolor", version.ref = "ma
 [plugins]
 
 multiplatform = { id = "org.jetbrains.kotlin.multiplatform", version.ref = "kotlin" }
+composeCompiler = { id = "org.jetbrains.kotlin.plugin.compose", version.ref = "kotlin" }
 compose = { id = "org.jetbrains.compose", version.ref = "compose" }
 android-application = { id = "com.android.application", version.ref = "agp" }
