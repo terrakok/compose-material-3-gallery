@@ -24,5 +24,5 @@ To run the application on iPhone device/simulator:
  - Or use [Kotlin Multiplatform Mobile plugin](https://plugins.jetbrains.com/plugin/14936-kotlin-multiplatform-mobile) for Android Studio
 
 ### Browser
-Run the browser application: `./gradlew :composeApp:jsBrowserDevelopmentRun`
+Run the browser application: `./gradlew :composeApp:wasmJsBrowserRun`
 
