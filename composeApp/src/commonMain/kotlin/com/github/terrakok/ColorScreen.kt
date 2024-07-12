@@ -215,7 +215,8 @@ fun ColorScreen() {
                 MaterialTheme(
                     colorScheme = dynamicColorScheme(
                         seedColor = appColor.color,
-                        isDark = false
+                        isDark = false,
+                        isAmoled = false
                     )
                 ) {
                     PaletteCard(
@@ -228,7 +229,8 @@ fun ColorScreen() {
                 MaterialTheme(
                     colorScheme = dynamicColorScheme(
                         seedColor = appColor.color,
-                        isDark = true
+                        isDark = true,
+                        isAmoled = false
                     )
                 ) {
                     PaletteCard(

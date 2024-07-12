@@ -102,7 +102,8 @@ internal fun AppTheme(
                         }
                     }
                 },
-                isDark = isDark
+                isDark = isDark,
+                isAmoled = false
             ),
             typography = AppTypography,
             shapes = AppShapes,
