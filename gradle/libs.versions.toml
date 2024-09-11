@@ -1,7 +1,7 @@
 [versions]
 
-kotlin = "2.0.10-RC"
-compose = "1.7.0-dev1727"
+kotlin = "2.0.20"
+compose = "1.7.0-beta01"
 agp = "8.5.1"
 androidx-activityCompose = "1.9.0"
 materialKolor = "1.7.0"
