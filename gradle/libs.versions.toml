@@ -1,10 +1,10 @@
 [versions]
 
-kotlin = "2.0.20"
-compose = "1.7.0-beta01"
-agp = "8.5.1"
-androidx-activityCompose = "1.9.0"
-materialKolor = "1.7.0"
+kotlin = "2.1.0"
+compose = "1.7.1"
+agp = "8.7.2"
+androidx-activityCompose = "1.9.3"
+materialKolor = "2.0.0"
 
 [libraries]
 
