@@ -67,6 +67,12 @@ kotlin {
                 implementation(compose.desktop.currentOs)
             }
         }
+
+        webMain {
+            dependencies {
+                implementation(libs.kotlinx.browser)
+            }
+        }
     }
 }
 

@@ -1,17 +1,19 @@
 [versions]
 
 kotlin = "2.2.20-Beta2"
-compose = "1.9.0+dev2718"
+compose = "1.9.0+dev2724"
 agp = "8.9.2"
 androidx-activityCompose = "1.10.1"
 materialKolor = "2.1.1"
 kotlinx-coroutines = "1.10.2"
+kotlinx-browser = "0.4"
 
 [libraries]
 
 androidx-activityCompose = { module = "androidx.activity:activity-compose", version.ref = "androidx-activityCompose" }
 materialKolor = { module = "com.materialkolor:material-kolor", version.ref = "materialKolor" }
 kotlinx-coroutines = { module = "org.jetbrains.kotlinx:kotlinx-coroutines-core", version.ref = "kotlinx-coroutines" }
+kotlinx-browser = { module = "org.jetbrains.kotlinx:kotlinx-browser", version.ref = "kotlinx-browser" }
 
 [plugins]
 
