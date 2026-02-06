@@ -49,8 +49,6 @@ internal enum class SeedColor(val colorName: String, val value: Color) {
     ORANGE("Orange", Color(0xFF_FF9800)),
     DEEP_ORANGE("Deep orange", Color(0xFF_FF5722)),
     PINK("Pink", Color(0xFF_E91E63)),
-    REVIVLE_ORANGE("Revivle Orange", Color(0xFF_D79542)),
-    REVIVLE_SALMON("Revivle salmon", Color(0xFF_FB8E82))
 }
 
 internal enum class ColorPalette(
@@ -64,30 +62,30 @@ internal enum class ColorPalette(
 ) {
     PALETTE_1(
         "Palette 1",
-        primary = Color(0xFF_FF5722), // deep orange
-        secondary = Color(0xFF_03A9F4), // light blue
-        tertiary = Color(0xFF_4CAF50), // green
-        neutral = Color(0xFF_9E9E9E), // grey
-        neutralVariant = Color(0xFF_795548), // brown
-        error = Color(0xFF_F44336)  // red
+        primary = Color(0xFF_343433),
+        secondary = Color(0xFF_434343),
+        tertiary = Color(0xFF_616161),
+        neutral = Color(0xFF_757575),
+        neutralVariant = Color(0xFF_F7F3EF),
+        error = Color(0xFF_F44336)
     ),
     PALETTE_2(
         "Palette 2",
-        primary = Color(0xFF_E91E63), // pink
-        secondary = Color(0xFF_2196F3), // blue
-        tertiary = Color(0xFF_FFC107), // amber
-        neutral = Color(0xFF_607D8B), // blue grey
-        neutralVariant = Color(0xFF_8BC34A), // light green
-        error = Color(0xFF_D32F2F)  // red 700
+        primary = Color(0xFF_D79542),
+        secondary = Color(0xFF_434343),
+        tertiary = Color(0xFF_616161),
+        neutral = Color(0xFF_757575),
+        neutralVariant = Color(0xFF_F7F3EF),
+        error = Color(0xFF_F44336)
     ),
     PALETTE_3(
         "Palette 3",
-        primary = Color(0xFF_9C27B0), // purple
-        secondary = Color(0xFF_00BCD4), // cyan
-        tertiary = Color(0xFF_FF9800), // orange
-        neutral = Color(0xFF_795548), // brown
-        neutralVariant = Color(0xFF_BDBDBD), // grey 400
-        error = Color(0xFF_C62828)  // red 800
+        primary = Color(0xFF_FB8E82),
+        secondary = Color(0xFF_434343),
+        tertiary = Color(0xFF_616161),
+        neutral = Color(0xFF_757575),
+        neutralVariant = Color(0xFF_F7F3EF),
+        error = Color(0xFF_F44336)
     )
 }
 
