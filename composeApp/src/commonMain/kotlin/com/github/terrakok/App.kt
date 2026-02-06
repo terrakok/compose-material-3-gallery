@@ -126,6 +126,7 @@ internal fun App() = AppTheme {
                             contentDescription = "Toggle brightness"
                         )
                     }
+                    SelectColorPaletteButton()
                     SelectSeedColorButton()
                     SelectColorExtractionImageButton()
                 }

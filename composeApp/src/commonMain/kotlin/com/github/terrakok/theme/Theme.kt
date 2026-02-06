@@ -49,6 +49,46 @@ internal enum class SeedColor(val colorName: String, val value: Color) {
     ORANGE("Orange", Color(0xFF_FF9800)),
     DEEP_ORANGE("Deep orange", Color(0xFF_FF5722)),
     PINK("Pink", Color(0xFF_E91E63)),
+    REVIVLE_ORANGE("Revivle Orange", Color(0xFF_D79542)),
+    REVIVLE_SALMON("Revivle salmon", Color(0xFF_FB8E82))
+}
+
+internal enum class ColorPalette(
+    val paletteName: String,
+    val primary: Color,
+    val secondary: Color,
+    val tertiary: Color,
+    val neutral: Color,
+    val neutralVariant: Color,
+    val error: Color
+) {
+    PALETTE_1(
+        "Palette 1",
+        primary = Color(0xFF_FF5722), // deep orange
+        secondary = Color(0xFF_03A9F4), // light blue
+        tertiary = Color(0xFF_4CAF50), // green
+        neutral = Color(0xFF_9E9E9E), // grey
+        neutralVariant = Color(0xFF_795548), // brown
+        error = Color(0xFF_F44336)  // red
+    ),
+    PALETTE_2(
+        "Palette 2",
+        primary = Color(0xFF_E91E63), // pink
+        secondary = Color(0xFF_2196F3), // blue
+        tertiary = Color(0xFF_FFC107), // amber
+        neutral = Color(0xFF_607D8B), // blue grey
+        neutralVariant = Color(0xFF_8BC34A), // light green
+        error = Color(0xFF_D32F2F)  // red 700
+    ),
+    PALETTE_3(
+        "Palette 3",
+        primary = Color(0xFF_9C27B0), // purple
+        secondary = Color(0xFF_00BCD4), // cyan
+        tertiary = Color(0xFF_FF9800), // orange
+        neutral = Color(0xFF_795548), // brown
+        neutralVariant = Color(0xFF_BDBDBD), // grey 400
+        error = Color(0xFF_C62828)  // red 800
+    )
 }
 
 internal enum class ColorExtractionImage(val imageName: String, val imageResource: DrawableResource) {
@@ -61,11 +101,9 @@ internal enum class ColorExtractionImage(val imageName: String, val imageResourc
 }
 
 internal sealed class AppColor {
-    abstract val color: Color
-    data class Seed(val seedColor: SeedColor) : AppColor() {
-        override val color: Color = seedColor.value
-    }
-    data class Image(val image: ColorExtractionImage, override val color: Color) : AppColor()
+    data class Seed(val seedColor: SeedColor) : AppColor()
+    data class Image(val image: ColorExtractionImage, val color: Color) : AppColor()
+    data class Palette(val colorPalette: ColorPalette) : AppColor()
 }
 
 internal val LocalThemeIsDark = compositionLocalOf { mutableStateOf(true) }
@@ -89,22 +127,35 @@ internal fun AppTheme(
     ) {
         val isDark by isDarkState
         SystemAppearance(!isDark)
+        val colorScheme = remember(appColor, isDark) {
+            when (appColor) {
+                is AppColor.Seed -> dynamicColorScheme(
+                    seedColor = appColor.seedColor.value,
+                    isDark = isDark,
+                    isAmoled = false
+                )
+                is AppColor.Image -> dynamicColorScheme(
+                    seedColor = appColor.color,
+                    isDark = isDark,
+                    isAmoled = false
+                )
+                is AppColor.Palette -> {
+                    val palette = appColor.colorPalette
+                    dynamicColorScheme(
+                        primary = palette.primary,
+                        secondary = palette.secondary,
+                        tertiary = palette.tertiary,
+                        neutral = palette.neutral,
+                        neutralVariant = palette.neutralVariant,
+                        error = palette.error,
+                        isDark = isDark,
+                        isAmoled = false
+                    )
+                }
+            }
+        }
         MaterialTheme(
-            colorScheme = dynamicColorScheme(
-                seedColor = remember(appColor) {
-                    when(appColor) {
-                        is AppColor.Seed -> {
-                            appColor.seedColor.value
-                        }
-                        is AppColor.Image -> {
-
-                            appColor.color
-                        }
-                    }
-                },
-                isDark = isDark,
-                isAmoled = false
-            ),
+            colorScheme = colorScheme,
             typography = AppTypography,
             shapes = AppShapes,
             content = {

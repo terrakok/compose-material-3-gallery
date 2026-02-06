@@ -19,6 +19,7 @@ import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.text.style.TextAlign
 import androidx.compose.ui.unit.dp
+import com.github.terrakok.theme.AppColor
 import com.github.terrakok.theme.LocalAppColor
 import com.materialkolor.dynamicColorScheme
 
@@ -212,12 +213,36 @@ fun ColorScreen() {
         items(items) {
             Row {
                 val appColor by LocalAppColor.current
-                MaterialTheme(
-                    colorScheme = dynamicColorScheme(
-                        seedColor = appColor.color,
+
+                val lightColorScheme = when (val color = appColor) {
+                    is AppColor.Seed -> dynamicColorScheme(
+                        seedColor = color.seedColor.value,
                         isDark = false,
                         isAmoled = false
                     )
+
+                    is AppColor.Image -> dynamicColorScheme(
+                        seedColor = color.color,
+                        isDark = false,
+                        isAmoled = false
+                    )
+
+                    is AppColor.Palette -> {
+                        val palette = color.colorPalette
+                        dynamicColorScheme(
+                            primary = palette.primary,
+                            secondary = palette.secondary,
+                            tertiary = palette.tertiary,
+                            neutral = palette.neutral,
+                            neutralVariant = palette.neutralVariant,
+                            error = palette.error,
+                            isDark = false,
+                            isAmoled = false
+                        )
+                    }
+                }
+                MaterialTheme(
+                    colorScheme = lightColorScheme
                 ) {
                     PaletteCard(
                         modifier = Modifier
@@ -226,12 +251,36 @@ fun ColorScreen() {
                         list = it
                     )
                 }
-                MaterialTheme(
-                    colorScheme = dynamicColorScheme(
-                        seedColor = appColor.color,
+
+                val darkColorScheme = when (val color = appColor) {
+                    is AppColor.Seed -> dynamicColorScheme(
+                        seedColor = color.seedColor.value,
                         isDark = true,
                         isAmoled = false
                     )
+
+                    is AppColor.Image -> dynamicColorScheme(
+                        seedColor = color.color,
+                        isDark = true,
+                        isAmoled = false
+                    )
+
+                    is AppColor.Palette -> {
+                        val palette = color.colorPalette
+                        dynamicColorScheme(
+                            primary = palette.primary,
+                            secondary = palette.secondary,
+                            tertiary = palette.tertiary,
+                            neutral = palette.neutral,
+                            neutralVariant = palette.neutralVariant,
+                            error = palette.error,
+                            isDark = true,
+                            isAmoled = false
+                        )
+                    }
+                }
+                MaterialTheme(
+                    colorScheme = darkColorScheme
                 ) {
                     PaletteCard(
                         modifier = Modifier
