@@ -32,59 +32,34 @@ import com.github.terrakok.theme.LocalAppColor
 import com.github.terrakok.theme.SeedColor
 
 @Composable
-internal fun SelectSeedColorButton() {
-    val appColorState = LocalAppColor.current
-    val appColor = appColorState.value
-    val selectedSeedColor = (appColor as? AppColor.Seed)?.seedColor
-
-    fun onSelected(color: SeedColor) {
-        appColorState.value = AppColor.Seed(color)
-    }
-
-    var isSeedChooserOpen by remember { mutableStateOf(false) }
-    IconButton(
-        onClick = { isSeedChooserOpen = !isSeedChooserOpen }
-    ) {
-        Icon(
-            Icons.Default.Palette,
-            contentDescription = "Select a seed color"
-        )
-    }
-    if (isSeedChooserOpen) {
-        val shape = RoundedCornerShape(16.dp)
-        Popup(onDismissRequest = { isSeedChooserOpen = false }) {
-            Column(
-                Modifier
-                    .shadow(16.dp, shape)
-                    .clip(shape)
-                    .background(MaterialTheme.colorScheme.surfaceVariant)
-                    .padding(vertical = 8.dp)
-                    .width(IntrinsicSize.Max)
-            ) {
-                SeedColor.entries.forEach { color ->
-                    Row(
-                        Modifier
-                            .fillMaxWidth()
-                            .clickable(enabled = selectedSeedColor != color) {
-                                onSelected(color)
-                                isSeedChooserOpen = false
-                            }
-                            .then(if (selectedSeedColor == color) Modifier.alpha(0.6f) else Modifier)
-                            .padding(16.dp)
-                    ) {
-                        Icon(
-                            imageVector = if (selectedSeedColor == color) {
-                                Icons.Filled.Palette
-                            } else {
-                                Icons.Outlined.Palette
-                            },
-                            contentDescription = "Select a seed color",
-                            tint = color.value
-                        )
-                        Text(color.colorName, Modifier.padding(horizontal = 16.dp))
-                    }
+internal fun SelectSeedColor(
+    closeChooser: () -> Unit,
+    selectedSeedColor: SeedColor?,
+    onSeedColorSelected: (SeedColor) -> Unit
+) {
+    Text(
+        text = "Seed Color",
+        style = MaterialTheme.typography.labelLarge,
+        modifier = Modifier.padding(horizontal = 16.dp, vertical = 8.dp)
+    )
+    SeedColor.entries.forEach { color ->
+        val isSelected = selectedSeedColor == color
+        Row(
+            Modifier
+                .fillMaxWidth()
+                .clickable(enabled = !isSelected) {
+                    onSeedColorSelected(color)
+                    closeChooser()
                 }
-            }
+                .then(if (isSelected) Modifier.alpha(0.6f) else Modifier)
+                .padding(16.dp)
+        ) {
+            Icon(
+                imageVector = if (isSelected) Icons.Filled.Palette else Icons.Outlined.Palette,
+                contentDescription = "Select a seed color",
+                tint = color.value
+            )
+            Text(color.colorName, Modifier.padding(horizontal = 16.dp))
         }
     }
 }

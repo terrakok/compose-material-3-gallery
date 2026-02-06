@@ -72,11 +72,11 @@ kotlin {
 
 android {
     namespace = "com.github.terrakok"
-    compileSdk = 34
+    compileSdk = 36
 
     defaultConfig {
         minSdk = 24
-        targetSdk = 34
+        targetSdk = 36
 
         applicationId = "com.github.terrakok.androidApp"
         versionCode = 1

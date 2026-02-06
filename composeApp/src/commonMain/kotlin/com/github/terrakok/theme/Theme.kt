@@ -51,6 +51,44 @@ internal enum class SeedColor(val colorName: String, val value: Color) {
     PINK("Pink", Color(0xFF_E91E63)),
 }
 
+internal enum class ColorPalette(
+    val paletteName: String,
+    val primary: Color,
+    val secondary: Color,
+    val tertiary: Color,
+    val neutral: Color,
+    val neutralVariant: Color,
+    val error: Color
+) {
+    PALETTE_1(
+        "Palette 1",
+        primary = Color(0xFF_343433),
+        secondary = Color(0xFF_434343),
+        tertiary = Color(0xFF_616161),
+        neutral = Color(0xFF_757575),
+        neutralVariant = Color(0xFF_F7F3EF),
+        error = Color(0xFF_F44336)
+    ),
+    PALETTE_2(
+        "Palette 2",
+        primary = Color(0xFF_D79542),
+        secondary = Color(0xFF_434343),
+        tertiary = Color(0xFF_616161),
+        neutral = Color(0xFF_757575),
+        neutralVariant = Color(0xFF_F7F3EF),
+        error = Color(0xFF_F44336)
+    ),
+    PALETTE_3(
+        "Palette 3",
+        primary = Color(0xFF_FB8E82),
+        secondary = Color(0xFF_434343),
+        tertiary = Color(0xFF_616161),
+        neutral = Color(0xFF_757575),
+        neutralVariant = Color(0xFF_F7F3EF),
+        error = Color(0xFF_F44336)
+    )
+}
+
 internal enum class ColorExtractionImage(val imageName: String, val imageResource: DrawableResource) {
     LEAVES("Leaves", Res.drawable.content_based_color_scheme_1),
     PEONIES("Peonies", Res.drawable.content_based_color_scheme_2),
@@ -61,11 +99,9 @@ internal enum class ColorExtractionImage(val imageName: String, val imageResourc
 }
 
 internal sealed class AppColor {
-    abstract val color: Color
-    data class Seed(val seedColor: SeedColor) : AppColor() {
-        override val color: Color = seedColor.value
-    }
-    data class Image(val image: ColorExtractionImage, override val color: Color) : AppColor()
+    data class Seed(val seedColor: SeedColor) : AppColor()
+    data class Image(val image: ColorExtractionImage, val color: Color) : AppColor()
+    data class Palette(val colorPalette: ColorPalette) : AppColor()
 }
 
 internal val LocalThemeIsDark = compositionLocalOf { mutableStateOf(true) }
@@ -89,22 +125,35 @@ internal fun AppTheme(
     ) {
         val isDark by isDarkState
         SystemAppearance(!isDark)
+        val colorScheme = remember(appColor, isDark) {
+            when (appColor) {
+                is AppColor.Seed -> dynamicColorScheme(
+                    seedColor = appColor.seedColor.value,
+                    isDark = isDark,
+                    isAmoled = false
+                )
+                is AppColor.Image -> dynamicColorScheme(
+                    seedColor = appColor.color,
+                    isDark = isDark,
+                    isAmoled = false
+                )
+                is AppColor.Palette -> {
+                    val palette = appColor.colorPalette
+                    dynamicColorScheme(
+                        primary = palette.primary,
+                        secondary = palette.secondary,
+                        tertiary = palette.tertiary,
+                        neutral = palette.neutral,
+                        neutralVariant = palette.neutralVariant,
+                        error = palette.error,
+                        isDark = isDark,
+                        isAmoled = false
+                    )
+                }
+            }
+        }
         MaterialTheme(
-            colorScheme = dynamicColorScheme(
-                seedColor = remember(appColor) {
-                    when(appColor) {
-                        is AppColor.Seed -> {
-                            appColor.seedColor.value
-                        }
-                        is AppColor.Image -> {
-
-                            appColor.color
-                        }
-                    }
-                },
-                isDark = isDark,
-                isAmoled = false
-            ),
+            colorScheme = colorScheme,
             typography = AppTypography,
             shapes = AppShapes,
             content = {
